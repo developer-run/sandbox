@@ -4,6 +4,7 @@
 	"minimum-stability": "stable",
 	"description": "Simple and easy for use system for managing your websites.",
 	"keywords": ["nette", "framework"],
+	"license": "proprietary",
 	"authors": [
 		{
 			"name": "Pavel Palik"
