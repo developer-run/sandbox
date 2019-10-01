@@ -24,7 +24,7 @@
 		"nette/tester": "v1.6.1"
 	},
 	"suggest": {
-		"gedmo/doctrine-extensions": "Allow doctrine tree etc. [dev-master]. This is only php 7.1, we have hard "
+		"gedmo/doctrine-extensions": "Allow doctrine tree etc. [dev-master]. This is only php 7.1, we have hard this in vendor/devrun/framework/Gedmo"
 	},
 	"autoload": {
 		"classmap": ["Devrun/", "Gedmo/"]
