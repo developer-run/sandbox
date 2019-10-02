@@ -18,7 +18,9 @@
 		"kdyby/doctrine": "^3.1",
 		"kdyby/fake-session": "^2.0",
 		"kdyby/nette-session-panel": "^3.2",
-		"flame/framework": "^6.1"
+		"flame/framework": "^6.1",
+		"contributte/image-storage": "^1.1",
+		"nextras/migrations": "^3.1"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^5.0",

@@ -98,6 +98,12 @@ class Configurator extends \Nette\Configurator
             }
         }
 
+        foreach ($parameters as $name => $parameter) {
+            if (!is_dir($parameter)) {
+                throw new InvalidArgumentException("Sandbox parameter '$name' does not directory exist '{$parameter}'");
+            }
+        }
+
         return $parameters;
     }
 
