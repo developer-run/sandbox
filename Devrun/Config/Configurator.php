@@ -42,10 +42,11 @@ class Configurator extends \Nette\Configurator
 
 
     /**
-     * @param             $sandbox
-     * @param ClassLoader $classLoader
+     * @param string       $sandbox
+     * @param string|array $debugMode
+     * @param ClassLoader  $classLoader
      */
-    public function __construct($sandbox, ClassLoader $classLoader = NULL)
+    public function __construct($sandbox, $debugMode = NULL, ClassLoader $classLoader = NULL)
     {
         parent::__construct();
         $this->sandbox     = $sandbox;
@@ -58,6 +59,8 @@ class Configurator extends \Nette\Configurator
 
             $this->validateConfiguration();
             $this->loadModulesConfiguration();
+
+            if ($debugMode) $this->setDebugMode($debugMode);
 
             $this->enableDebugger($this->parameters['logDir']);
             $this->setTempDirectory($this->parameters['tempDir']);
