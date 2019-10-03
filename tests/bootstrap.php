@@ -2,7 +2,7 @@
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
-$configurator = new \Devrun\Config\Configurator(dirname(__DIR__) . '/tests', true, $loader);
+$configurator = new \Devrun\Config\Configurator(dirname(__DIR__) . '/tests', $debugMode = true, $loader);
 
 //error_reporting(~E_USER_DEPRECATED); // note ~ before E_USER_DEPRECATED
 
