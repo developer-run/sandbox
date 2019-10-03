@@ -15,6 +15,12 @@ namespace Devrun\Utils;
  */
 class EscapeColors
 {
+
+    private $defaultForeground = 'white';
+
+    private $defaultBackground = 'black';
+
+
     private static $foreground = array(
         'black'       => '0;30',
         'dark_gray'   => '1;30',
@@ -46,6 +52,7 @@ class EscapeColors
 
     /**
      * Make string appear in color
+     * @throws \Exception
      */
     public static function fg_color($color, $string)
     {
@@ -57,6 +64,7 @@ class EscapeColors
 
     /**
      * Make string appear with background color
+     * @throws \Exception
      */
     public static function bg_color($color, $string)
     {
@@ -68,6 +76,7 @@ class EscapeColors
 
     /**
      * See what they all look like
+     * @throws \Exception
      */
     public static function all_fg()
     {
@@ -78,6 +87,7 @@ class EscapeColors
 
     /**
      * See what they all look like
+     * @throws \Exception
      */
     public static function all_bg()
     {
@@ -89,9 +99,10 @@ class EscapeColors
     /**
      * Shortcut to fg_color or bg_color
      *
-     * @param string $color     See possible colors with self::all_[fg|bg]() methods
-     * @param array  $arguments 0 - message to be colored;
+     * @param string $color See possible colors with self::all_[fg|bg]() methods
+     * @param array $arguments 0 - message to be colored;
      *                          ...1 - [Optional] 'bg' or 'fg' (default) to indicate background or foreground coloring
+     * @return
      */
     public static function __callStatic($color, $arguments)
     {

@@ -13,8 +13,10 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  */
-class EntityFormMapper extends Nette\Object
+class EntityFormMapper
 {
+
+    use Nette\SmartObject;
 
     /**
      * @var EntityManager

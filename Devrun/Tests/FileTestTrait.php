@@ -16,6 +16,7 @@ use Nette\Http\FileUpload;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Finder;
 use Nette\Utils\Image;
+use Nette\Utils\UnknownImageFileException;
 
 trait FileTestTrait
 {
@@ -68,7 +69,7 @@ trait FileTestTrait
     public function createMockFile($type = 'image/jpeg', string $findFileName = null)
     {
         if (!$source = $this->findTestFile($type, $findFileName)) {
-            throw new FileNotFoundException("nenalezen žádný testovací soubor pro masku $mask");
+            throw new FileNotFoundException("nenalezen žádný testovací soubor pro masku $type");
         }
 
         $put = TEMP_DIR . DIRECTORY_SEPARATOR . 'file' . DIRECTORY_SEPARATOR . basename($source);
@@ -107,7 +108,12 @@ trait FileTestTrait
     public function createTestImage($type = 'image/jpeg')
     {
         $source = $this->findTestFile($type);
-        return Image::fromFile($source);
+        try {
+            return Image::fromFile($source);
+
+        } catch (UnknownImageFileException $e) {
+            return Image::fromBlank(320, 240);
+        }
     }
 
 

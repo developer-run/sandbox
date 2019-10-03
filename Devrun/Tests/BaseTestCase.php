@@ -2,35 +2,28 @@
 
 namespace Devrun\Tests;
 
-use Devrun\FileNotFoundException;
-use Devrun\InvalidArgumentException;
+use Devrun\ClassNotFoundException;
+use Devrun\Migrations\Migration;
 use Nette\DI\Container;
 use Nette\DI\MissingServiceException;
 use Nette\Environment;
-use Nette\Http\FileUpload;
 use Nette\Reflection\AnnotationsParser;
-use Nette\Utils\FileSystem;
-use Nette\Utils\Finder;
-use Nette\Utils\Image;
 use PHPUnit\Framework\DOMTestTrait;
 use PHPUnit\Framework\TestCase;
 
 class BaseTestCase extends TestCase {
 
-    /** @var Container */
-//    public $container;
-
     use DOMTestTrait;
     use FileTestTrait;
 
-    public static $initDatabase = true;
-
+    public static $migrations = false;
 
 
     /**
      * implementace Nette inject metodiky pro pohodlnější testy
      *
      * @param string $name
+     * @throws \ReflectionException
      */
     private function _injectServices($name = 'inject')
     {
@@ -88,11 +81,16 @@ class BaseTestCase extends TestCase {
 
     public static function setUpBeforeClass()
     {
-        $reflectClass = new \ReflectionClass(get_called_class());
-        $initDatabase = $reflectClass->getProperty("initDatabase")->getValue();
+        try {
+            $reflectClass = new \ReflectionClass(get_called_class());
+            $migrations = $reflectClass->getProperty("migrations")->getValue();
 
-        if ($initDatabase) {
-            \TestInit::initMigrations(self::getContainer());
+        } catch (\ReflectionException $e) {
+            throw new $e;
+        }
+
+        if ($migrations) {
+            Migration::reset(self::getContainer());
         }
 
     }
@@ -117,7 +115,12 @@ class BaseTestCase extends TestCase {
             $container = new $_container;
         }
 
-        $this->_injectServices();
+        try {
+            $this->_injectServices();
+
+        } catch (\ReflectionException $e) {
+            throw new ClassNotFoundException($e->getMessage());
+        }
     }
 
 }

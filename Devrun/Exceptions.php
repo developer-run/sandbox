@@ -80,6 +80,14 @@ class FileNotFoundException extends IOException implements Exception
 /**
  * @author Pavel Paulík <pavel.paulik@support.etnetera.cz>
  */
+class ClassNotFoundException extends IOException implements Exception
+{
+}
+
+
+/**
+ * @author Pavel Paulík <pavel.paulik@support.etnetera.cz>
+ */
 class ServiceNotFoundException extends \RuntimeException implements Exception
 {
 }

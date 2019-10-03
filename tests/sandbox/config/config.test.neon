@@ -1,0 +1,36 @@
+parameters:
+	database:
+		dbname: framework_test
+		user:
+		password:
+
+
+services:
+#	remove cache for tests
+	nette.latteFactory:
+		setup:
+			- setTempDirectory(null)
+
+	cacheStorage:
+		class: Nette\Caching\Storages\MemoryStorage
+#		class: Nette\Caching\Storages\DevNullStorage
+
+#	environmentStorage:
+#		class: Nette\Caching\Storages\FileStorage(%tempDir%\cache)
+
+	session:
+		class: Devrun\Tests\Http\FakeSession
+
+
+doctrine:
+	charset: UTF8
+	driver: pdo_mysql
+	user: %database.user%
+	password: %database.password%
+	dbname: %database.dbname%
+	autoGenerateProxyClasses: %debugMode%
+	proxyDir: "%tempDir%/proxies"
+	proxyNamespace: "proxy"
+	cacheClass: DoctrineModule\Cache
+	secondLevelCache:
+		enabled: true

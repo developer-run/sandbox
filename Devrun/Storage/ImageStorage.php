@@ -150,8 +150,9 @@ class ImageStorage extends \Ublaboo\ImageStorage\ImageStorage
      *
      * @param $args
      *
-     * @return Image
+     * @return Image|array
      * @throws ImageResizeException
+     * @throws \Nette\Utils\UnknownImageFileException
      */
     public function fromIdentifier($args)
     {

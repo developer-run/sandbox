@@ -77,7 +77,7 @@ class Configurator extends \Nette\Configurator
      */
     public function getSandboxParameters()
     {
-        $mandatoryParameters = array('wwwDir', 'appDir', 'baseDir', 'libsDir', 'logDir', 'dataDir', 'tempDir', 'logDir', 'configDir', 'wwwCacheDir', 'publicDir', 'resourcesDir', 'modulesDir');
+        $mandatoryParameters = array('wwwDir', 'appDir', 'baseDir', 'libsDir', 'logDir', 'dataDir', 'tempDir', 'logDir', 'configDir', 'wwwCacheDir', 'publicDir', 'resourcesDir', 'modulesDir', 'migrationsDir');
 
         if (!is_string($this->sandbox) && !is_array($this->sandbox)) {
             throw new InvalidArgumentException("SandboxDir must be string or array, " . gettype($this->sandbox) . " given.");
@@ -247,6 +247,8 @@ class Configurator extends \Nette\Configurator
             $compiler->addExtension('annotations', new \Kdyby\Annotations\DI\AnnotationsExtension());
             $compiler->addExtension('doctrine', new \Kdyby\Doctrine\DI\OrmExtension());
             $compiler->addExtension('translation', new \Kdyby\Translation\DI\TranslationExtension());
+            $compiler->addExtension('translatable', new \Zenify\DoctrineBehaviors\DI\TranslatableExtension());
+            $compiler->addExtension('monolog', new \Kdyby\Monolog\DI\MonologExtension());
             $compiler->addExtension('modules', new \Flame\Modules\DI\ModulesExtension());
 
             $compiler->addExtension('core', new Devrun\DI\CoreExtension());
