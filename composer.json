@@ -19,7 +19,7 @@
 		"kdyby/fake-session": "^2.0",
 		"kdyby/nette-session-panel": "^3.2",
 		"flame/modules": "2.3.0",
-		"flame/framework": "^6.1.0",
+		"flame/framework": "^6.1",
 		"contributte/image-storage": "^1.1",
 		"nextras/migrations": "^3.1",
 		"zenify/doctrine-behaviors": "^4.2",

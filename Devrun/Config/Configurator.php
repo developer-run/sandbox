@@ -251,6 +251,7 @@ class Configurator extends \Nette\Configurator
             $compiler->addExtension('doctrine', new \Kdyby\Doctrine\DI\OrmExtension());
             $compiler->addExtension('translation', new \Kdyby\Translation\DI\TranslationExtension());
             $compiler->addExtension('translatable', new \Zenify\DoctrineBehaviors\DI\TranslatableExtension());
+            $compiler->addExtension('migrations', new \Nextras\Migrations\Bridges\NetteDI\MigrationsExtension());
             $compiler->addExtension('monolog', new \Kdyby\Monolog\DI\MonologExtension());
             $compiler->addExtension('modules', new \Flame\Modules\DI\ModulesExtension());
 
