@@ -15,6 +15,7 @@ use Nette\Application\PresenterFactory;
 use Nette\Application\Request;
 use Nette\Application\Responses\TextResponse;
 use Nette\Security\User;
+use Nette\Utils\Validators;
 
 
 class Presenter extends BaseTestCase
@@ -206,25 +207,36 @@ class Presenter extends BaseTestCase
      * @param null $username
      * @param null $password
      *
-     * @throws \PHPUnit_Framework_AssertionFailedError
      * @return User
+     * @throws \Nette\Utils\AssertionException
+     * @throws \PHPUnit_Framework_AssertionFailedError
      */
     public function sendLoginForm($username = null, $password = null)
     {
         $this->getContainer()->user->logout();
 
-        $testUser = $this->getContainer()->getParameters()['testUser'];
+        if (!$username && !$password) {
+            $errorMessage = "define '%' in config parameters [testUser: username:,password:] or set sendLoginForm with custom params";
+
+            Validators::assertField($this->getContainer()->getParameters(), 'testUser', null, $errorMessage);
+            Validators::assertField($this->getContainer()->getParameters()['testUser'], 'username', 'string', $errorMessage);
+            Validators::assertField($this->getContainer()->getParameters()['testUser'], 'password', null, $errorMessage);
+
+            $testUser = $this->getContainer()->getParameters()['testUser'];
+            $username = $testUser['username'];
+            $password = $testUser['password'];
+        }
 
         $userLoginAction = 'Cms:Login';
 
         $request = new Request($userLoginAction, 'POST', array(
             'action' => 'default',
-            'do'     => 'loginForm-submit',
+            'do' => 'loginForm-submit',
         ), array(
-            "username"    => $username ? $username : $testUser['login'],
-            "password" => $password ? $password : $testUser['password'],
-            "test"     => true,
-            "send"     => "Login",
+            "username" => $username,
+            "password" => $password,
+            "test" => true,
+            "send" => "Login",
         ));
 
         /** @var LoginPresenter $presenter */
@@ -237,10 +249,11 @@ class Presenter extends BaseTestCase
             $html = (string)$response->getSource();
             $err  = $this->getErrors($response);
 
-            $out = __DIR__ . '/htmlOutput.html';
+            $logDir = $this->getContainer()->getParameters()['logDir'];
+            $out = $logDir . '/htmlOutput.html';
             file_put_contents($out, $html);
 
-            throw new \PHPUnit_Framework_AssertionFailedError('není redirect, vygenerován html, ' . $err);
+            throw new \PHPUnit_Framework_AssertionFailedError(__METHOD__ . " there is not redirect, generate html to $out" . $err);
         }
 
         $this->assertEmpty($err, 'Chyba formuláře ' . $err);
