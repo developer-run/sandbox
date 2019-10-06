@@ -88,6 +88,44 @@ trait FileTrait
 
 
     /**
+     * Purges directory.
+     *
+     * @param string
+     * @return void
+     */
+    public static function purge($dir)
+    {
+        if (!is_dir($dir)) {
+            mkdir($dir);
+        }
+        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST) as $entry) {
+            if ($entry->isDir()) {
+                rmdir($entry);
+            } else {
+                unlink($entry);
+            }
+        }
+    }
+
+
+    /**
+     * remove dir from masks files, only first level, not to deep
+     *
+     * @param $dir
+     * @return void
+     */
+    public static function eraseDirFromFiles($dir, $masks)
+    {
+        /** @var \SplFileInfo[] $dirContent */
+        $dirContent = Finder::findFiles($masks)->in($dir);
+
+        foreach ($dirContent as $file) {
+            @unlink($file->getPathname());
+        }
+    }
+
+
+    /**
      * @param $dirName
      *
      * @see https://stackoverflow.com/questions/7497733/how-can-use-php-to-check-if-a-directory-is-empty
