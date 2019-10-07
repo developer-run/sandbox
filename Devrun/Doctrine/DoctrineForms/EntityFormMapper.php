@@ -10,8 +10,9 @@ use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-
 /**
+ * Class EntityFormMapper
+ * @package Devrun\Doctrine\DoctrineForms
  */
 class EntityFormMapper
 {

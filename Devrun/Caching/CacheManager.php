@@ -14,12 +14,13 @@ use Devrun\Utils\FileTrait;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
 use Nette\InvalidArgumentException;
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Utils\Finder;
 
 
-class CacheManager extends Object
+class CacheManager
 {
+    use SmartObject;
     use FileTrait;
 
 	/** @var Cache */

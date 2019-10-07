@@ -16,13 +16,19 @@ use Devrun\Module\IModule;
 use Devrun\Utils\FileTrait;
 use Nette\DI\Config\Adapters\NeonAdapter;
 use Nette\DI\Container;
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Utils\Finder;
 use Nette\Utils\Validators;
 
-class BaseInstaller extends Object implements IInstaller
+/**
+ * Class BaseInstaller
+ * @package Devrun\Module\Installers
+ *
+ */
+class BaseInstaller implements IInstaller
 {
 
+    use SmartObject;
     use FileTrait;
 
 	/** @var array */

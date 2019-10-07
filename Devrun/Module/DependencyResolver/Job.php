@@ -11,12 +11,17 @@
 namespace Devrun\Module\DependencyResolver;
 
 use Devrun\InvalidArgumentException;
-use Nette\Object;
 use Devrun\Module\IModule;
+use Nette\SmartObject;
 
-
-class Job extends Object
+/**
+ * Class Job
+ * @package Devrun\Module\DependencyResolver
+ */
+class Job
 {
+
+    use SmartObject;
 
 	const ACTION_INSTALL = 'install';
 

@@ -20,11 +20,14 @@ use Nette\Forms\Controls\MultiSelectBox;
 use Nette\Forms\Controls\CheckboxList;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-
 /**
+ * Class TextControl
+ * @package Devrun\Doctrine\Controls
  */
-class TextControl extends Nette\Object implements IComponentMapper
+class TextControl implements IComponentMapper
 {
+
+    use Nette\SmartObject;
 
     /**
      * @var EntityFormMapper

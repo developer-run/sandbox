@@ -9,10 +9,12 @@
 
 namespace Devrun\Module;
 
-use Nette\Object;
+use Nette\SmartObject;
 
-class BaseModule extends Object implements IModule
+class BaseModule implements IModule
 {
+
+    use SmartObject;
 
     /** @var string */
     protected $name;

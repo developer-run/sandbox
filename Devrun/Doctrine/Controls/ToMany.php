@@ -11,8 +11,14 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Nette;
 use Nette\ComponentModel\Component;
 
-class ToMany extends Nette\Object implements IComponentMapper
+/**
+ * Class ToMany
+ * @package Devrun\Doctrine\Controls
+ */
+class ToMany implements IComponentMapper
 {
+
+    use Nette\SmartObject;
 
     /**
      * @var EntityFormMapper

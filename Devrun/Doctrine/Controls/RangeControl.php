@@ -12,8 +12,14 @@ use Nette\ComponentModel\Component;
 use Nette\Forms\Controls\BaseControl;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-class RangeControl extends Nette\Object implements IComponentMapper
+/**
+ * Class RangeControl
+ * @package Devrun\Doctrine\Controls
+ */
+class RangeControl implements IComponentMapper
 {
+
+    use Nette\SmartObject;
 
 	/**
 	 * @var EntityFormMapper

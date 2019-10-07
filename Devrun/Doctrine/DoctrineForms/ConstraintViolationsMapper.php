@@ -1,12 +1,5 @@
 <?php
 
-/**
- * This file is part of the Kdyby (http://www.kdyby.org)
- *
- * Copyright (c) 2008 Filip Procházka (filip@prochazka.su)
- *
- * For the full copyright and license information, please view the file license.txt that was distributed with this source code.
- */
 
 namespace Devrun\Doctrine\DoctrineForms;
 
@@ -21,12 +14,14 @@ use Symfony\Component\Validator\GroupSequenceProviderInterface;
 use Symfony\Component\Validator\ValidatorInterface;
 
 
-
 /**
- * @author Filip Procházka <filip@prochazka.su>
+ * Class ConstraintViolationsMapper
+ * @package Devrun\Doctrine\DoctrineForms
  */
-class ConstraintViolationsMapper extends Nette\Object
+class ConstraintViolationsMapper
 {
+
+    use Nette\SmartObject;
 
 	/**
 	 * @var \Symfony\Component\Validator\ValidatorInterface

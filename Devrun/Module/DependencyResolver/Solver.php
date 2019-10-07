@@ -11,14 +11,19 @@
 namespace Devrun\Module\DependencyResolver;
 
 use Devrun\InvalidArgumentException;
-use Nette\Object;
 use Devrun\Module\IModule;
 use Devrun\Module\ModuleFacade;
 use Devrun\Module\VersionHelpers;
+use Nette\SmartObject;
 
-
-class Solver extends Object
+/**
+ * Class Solver
+ * @package Devrun\Module\DependencyResolver
+ */
+class Solver
 {
+
+    use SmartObject;
 
 	/** @var IModule[] */
 	protected $installedModules;

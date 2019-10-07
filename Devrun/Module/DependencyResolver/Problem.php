@@ -11,11 +11,12 @@
 namespace Devrun\Module\DependencyResolver;
 
 use Devrun\InvalidArgumentException;
-use Nette\Object;
+use Nette\SmartObject;
 
-
-class Problem extends Object
+class Problem
 {
+
+    use SmartObject;
 
 	/** @var Job[] */
 	protected $solutions = array();

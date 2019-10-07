@@ -10,10 +10,14 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Nette;
 use Nette\ComponentModel\Component;
 
-
-
-class ToOne extends Nette\Object implements IComponentMapper
+/**
+ * Class ToOne
+ * @package Devrun\Doctrine\Controls
+ */
+class ToOne implements IComponentMapper
 {
+
+    use Nette\SmartObject;
 
 	/**
 	 * @var EntityFormMapper

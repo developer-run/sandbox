@@ -15,8 +15,10 @@ use Nette;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class FakeSessionSection extends Nette\Object implements \IteratorAggregate, \ArrayAccess
+class FakeSessionSection implements \IteratorAggregate, \ArrayAccess
 {
+
+    use Nette\SmartObject;
 
     /** @var \Nette\Http\Session */
     private $session;
