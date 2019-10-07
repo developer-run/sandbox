@@ -124,7 +124,9 @@ class BaseInstaller implements IInstaller
 				};
 			}
 
-			// update main config.neon
+            /*
+             * update main config.neon
+             */
 			if (count($configuration) > 0) {
 				$orig = $data = $this->loadConfig();
 
@@ -132,10 +134,11 @@ class BaseInstaller implements IInstaller
                 $data = Devrun\Utils\Arrays::array_replace_recursive_ex($data, $configuration); // better array_merge_recursive
 
 				$this->saveConfig($data);
-				$this->actions[] = function ($self) use ($orig) {
+				$this->actions[] = function (BaseInstaller $self) use ($orig) {
 					$self->saveConfig($orig);
 				};
 			}
+
 		} catch (\Exception $e) {
 			$actions = array_reverse($this->actions);
 

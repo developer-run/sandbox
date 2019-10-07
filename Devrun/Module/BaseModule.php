@@ -173,7 +173,7 @@ class BaseModule implements IModule
      */
     public function getRelativePublicPath()
     {
-        return '/Resources/public';
+        return '/resources/public';
     }
 
     /**
@@ -181,7 +181,7 @@ class BaseModule implements IModule
      */
     public function getRelativePackagePath()
     {
-        return '/Resources/packages';
+        return '/resources/packages';
     }
 
 
