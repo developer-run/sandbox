@@ -180,7 +180,7 @@ class BaseInstaller implements IInstaller
 
 			$this->saveConfig($data);
 
-			$this->actions[] = function ($self) use ($orig) {
+			$this->actions[] = function (BaseInstaller $self) use ($orig) {
 				$self->saveConfig($orig);
 			};
 		}
