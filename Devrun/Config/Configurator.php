@@ -11,11 +11,22 @@ namespace Devrun\Config;
 
 use Composer\Autoload\ClassLoader;
 use Devrun;
+use Devrun\DI\ImagesExtension;
+use Flame\Modules\DI\ModulesExtension;
+use Kdyby\Annotations\DI\AnnotationsExtension;
+use Kdyby\Console\DI\ConsoleExtension;
+use Kdyby\Doctrine\DI\OrmExtension;
+use Kdyby\Events\DI\EventsExtension;
+use Kdyby\Monolog\DI\MonologExtension;
+use Kdyby\Translation\DI\TranslationExtension;
 use Nette\DI;
 use Nette\DI\Compiler;
 use Nette\DI\Container;
+use Nette\DI\Helpers;
 use Nette\InvalidArgumentException;
 use Nette\Loaders\RobotLoader;
+use Nextras\Migrations\Bridges\NetteDI\MigrationsExtension;
+use Zenify\DoctrineBehaviors\DI\TranslatableExtension;
 
 /**
  * Class Configurator
@@ -60,7 +71,7 @@ class Configurator extends \Nette\Configurator
             $this->validateConfiguration();
             $this->loadModulesConfiguration();
 
-            if ($debugMode) $this->setDebugMode($debugMode);
+            if (NULL !== $debugMode) $this->setDebugMode($debugMode);
 
             $this->enableDebugger($this->parameters['logDir']);
             $this->setTempDirectory($this->parameters['tempDir']);
@@ -132,7 +143,7 @@ class Configurator extends \Nette\Configurator
         $settings = require $settingsFile;
 
         foreach ($settings['modules'] as &$module) {
-            $module['path'] = \Nette\DI\Helpers::expand($module['path'], $parameters);
+            $module['path'] = Helpers::expand($module['path'], $parameters);
         }
         $parameters = $settings + $parameters + $ret;
         $parameters['productionMode'] = !$parameters['debugMode'];
@@ -245,18 +256,18 @@ class Configurator extends \Nette\Configurator
     public function generateContainer(DI\Compiler $compiler)
     {
         $this->onCompile[] = function (Configurator $config, Compiler $compiler) {
-            $compiler->addExtension('events', new \Kdyby\Events\DI\EventsExtension());
-            $compiler->addExtension('console', new \Kdyby\Console\DI\ConsoleExtension());
-            $compiler->addExtension('annotations', new \Kdyby\Annotations\DI\AnnotationsExtension());
-            $compiler->addExtension('doctrine', new \Kdyby\Doctrine\DI\OrmExtension());
-            $compiler->addExtension('translation', new \Kdyby\Translation\DI\TranslationExtension());
-            $compiler->addExtension('translatable', new \Zenify\DoctrineBehaviors\DI\TranslatableExtension());
-            $compiler->addExtension('migrations', new \Nextras\Migrations\Bridges\NetteDI\MigrationsExtension());
-            $compiler->addExtension('monolog', new \Kdyby\Monolog\DI\MonologExtension());
-            $compiler->addExtension('modules', new \Flame\Modules\DI\ModulesExtension());
+            $compiler->addExtension('events', new EventsExtension());
+            $compiler->addExtension('console', new ConsoleExtension());
+            $compiler->addExtension('annotations', new AnnotationsExtension());
+            $compiler->addExtension('doctrine', new OrmExtension());
+            $compiler->addExtension('translation', new TranslationExtension());
+            $compiler->addExtension('translatable', new TranslatableExtension());
+            $compiler->addExtension('migrations', new MigrationsExtension());
+            $compiler->addExtension('monolog', new MonologExtension());
+            $compiler->addExtension('modules', new ModulesExtension());
 
             $compiler->addExtension('core', new Devrun\DI\CoreExtension());
-            $compiler->addExtension('imageStorage', new \Devrun\DI\ImagesExtension());
+            $compiler->addExtension('imageStorage', new ImagesExtension());
             $compiler->addExtension('doctrineForms', new Devrun\DI\FormsExtension());
         };
 
