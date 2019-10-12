@@ -54,7 +54,7 @@ class Configurator extends \Nette\Configurator
 
     /**
      * @param string       $sandbox
-     * @param string|array $debugMode
+     * @param bool|string|array $debugMode if is null then autodetect will use
      * @param ClassLoader  $classLoader
      */
     public function __construct($sandbox, $debugMode = NULL, ClassLoader $classLoader = NULL)
@@ -65,13 +65,16 @@ class Configurator extends \Nette\Configurator
 
         try {
             umask(0000);
+
+            if (NULL === $debugMode) {
+                $this->parameters['debugMode'] = NULL;
+            }
+
             $this->parameters = array_merge($this->parameters, $this->getSandboxParameters());
             $this->parameters = array_merge($this->parameters, $this->getDevrunDefaultParameters($this->parameters));
 
             $this->validateConfiguration();
             $this->loadModulesConfiguration();
-
-            if (NULL !== $debugMode) $this->setDebugMode($debugMode);
 
             $this->enableDebugger($this->parameters['logDir']);
             $this->setTempDirectory($this->parameters['tempDir']);
@@ -126,7 +129,15 @@ class Configurator extends \Nette\Configurator
     {
         $parameters = (array)$parameters;
 
-        $debugMode = isset($parameters['debugMode']) ? $parameters['debugMode'] : static::detectDebugMode();
+        if (!file_exists($settingsFile = $parameters['configDir'] . '/settings.php')) {
+            throw new InvalidArgumentException("file $settingsFile not found");
+        }
+
+        $settings = require $settingsFile;
+
+        $debugMode = isset($parameters['debugMode']) ? $parameters['debugMode'] : static::detectDebugMode($settings['debugIPs']);
+        $parameters['debugMode'] = $debugMode;
+
         $ret = array(
             'debugMode' => $debugMode,
             'environment' => ($e = static::detectEnvironment()) ? $e : ($debugMode ? 'development' : 'production'),
@@ -136,12 +147,6 @@ class Configurator extends \Nette\Configurator
             )
         );
 
-        if (!file_exists($settingsFile = $parameters['configDir'] . '/settings.php')) {
-            throw new InvalidArgumentException("file $settingsFile not found");
-        }
-
-        $settings = require $settingsFile;
-
         foreach ($settings['modules'] as &$module) {
             $module['path'] = Helpers::expand($module['path'], $parameters);
         }
@@ -149,6 +154,20 @@ class Configurator extends \Nette\Configurator
         $parameters['productionMode'] = !$parameters['debugMode'];
 
         return $parameters;
+    }
+
+
+    public static function detectDebugMode($list = null)
+    {
+        $list = is_string($list)
+            ? preg_split('#[,\s]+#', $list)
+            : (array) $list;
+
+        $debug = in_array(\Devrun\Utils\Debugger::getIPAddress(), $list) ||
+            (PHP_SAPI == 'cli' && \Nette\Utils\Strings::startsWith(getHostByName(getHostName()), "127.0.")) ||
+            parent::detectDebugMode($list);
+
+        return $debug;
     }
 
 

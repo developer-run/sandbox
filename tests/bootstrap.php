@@ -6,6 +6,12 @@ $configurator = new \Devrun\Config\Configurator(dirname(__DIR__) . '/tests', $de
 
 //error_reporting(~E_USER_DEPRECATED); // note ~ before E_USER_DEPRECATED
 
+$remoteIP = '37.221.241.103';
+
+$environment = $configurator->isDebugMode()
+    ? 'development'
+    : 'production';
+
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader
     ->addDirectory(__DIR__)
