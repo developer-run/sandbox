@@ -752,22 +752,13 @@ class ModuleFacade
         if ($this->_findModules === NULL) {
             $this->_findModules = array();
 
-            foreach (Finder::findDirectories('*')->in($this->modulesDir)->limitDepth(0) as $dir) {
+            foreach (Finder::findDirectories('*')->in([$this->modulesDir, $this->libsDir . "/devrun"])->limitDepth(0) as $dir) {
                 foreach (self::$moduleFiles as $moduleFile) {
                     foreach (Finder::findFiles($moduleFile)->in($dir) as $file) {
                         $this->findModulesClosure($file);
                     }
                 }
             }
-
-            foreach (Finder::findDirectories('*')->in($this->libsDir . "/devrun")->limitDepth(0) as $dir) {
-                foreach (self::$moduleFiles as $moduleFile) {
-                    foreach (Finder::findFiles($moduleFile)->in($dir) as $file) {
-                        $this->findModulesClosure($file);
-                    }
-                }
-            }
-
         }
 
         return $this->_findModules;
