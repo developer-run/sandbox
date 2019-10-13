@@ -246,7 +246,9 @@ class Configurator extends \Nette\Configurator
     {
         if (isset($this->parameters['modules'])) {
             foreach ($this->parameters['modules'] as $items) {
-                if (file_exists($fileConfig = $items['path'] . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "config.neon")) {
+                if ($items['status'] == Devrun\Module\ModuleFacade::STATUS_INSTALLED &&
+                    file_exists($fileConfig = $items['path'] . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "config.neon")
+                ) {
                     $this->addConfig($fileConfig);
                 }
             }
