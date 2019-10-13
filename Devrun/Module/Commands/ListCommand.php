@@ -48,20 +48,26 @@ class ListCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            foreach ($this->moduleManager->findModules() as $module) {
+            if ($modules = $this->moduleManager->findModules()) {
+                foreach ($modules as $module) {
 
-                $configVersion = isset($this->container->parameters['modules'][$module->getName()][ModuleFacade::MODULE_VERSION])
-                    ? $this->container->parameters['modules'][$module->getName()][ModuleFacade::MODULE_VERSION]
-                    : "`unknown`";
+                    $configVersion = isset($this->container->parameters['modules'][$module->getName()][ModuleFacade::MODULE_VERSION])
+                        ? $this->container->parameters['modules'][$module->getName()][ModuleFacade::MODULE_VERSION]
+                        : "`unknown`";
 
-                if ($configVersion == $module->getVersion()) {
-                    $version = $module->getVersion();
-                } else {
-                    $version = $module->getVersion() . ' (needs upgrade from: ' . $configVersion . ')';
+                    if ($configVersion == $module->getVersion()) {
+                        $version = $module->getVersion();
+                    } else {
+                        $version = $module->getVersion() . ' (needs upgrade from: ' . $configVersion . ')';
+                    }
+
+                    $output->writeln(sprintf('<info>%25s</info> | status: <comment>%-12s</comment> | version: <comment>%s</comment>', $module->getName(), $this->moduleManager->getStatus($module), $version));
                 }
 
-                $output->writeln(sprintf('<info>%25s</info> | status: <comment>%-12s</comment> | version: <comment>%s</comment>', $module->getName(), $this->moduleManager->getStatus($module), $version));
+            } else {
+                $output->writeln("<comment>Module list is empty</comment>");
             }
+
         } catch (InvalidArgumentException $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
         }
