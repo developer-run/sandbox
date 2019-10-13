@@ -1,4 +1,4 @@
-## Installation
+# Installation
 
 The best way to install Devrun/framework is using Composer:
 
@@ -6,7 +6,16 @@ The best way to install Devrun/framework is using Composer:
 composer require devrun/framework
 ```
 
+## Modules
 
-Module.php|.Devrun.php
+support modules. Module file name is Module.php or .Devrun.php
 
-package.json
+#### Commands
+
+```sh
+php www/index.php devrun:module:list                   # List modules
+php www/index.php devrun:module:update                 # Update local database of modules
+php www/index.php devrun:module:install <name>         # Install module
+php www/index.php devrun:module:uninstall <name>       # Uninstall module
+php www/index.php devrun:module:upgrade <name>         # Upgrade module
+```
