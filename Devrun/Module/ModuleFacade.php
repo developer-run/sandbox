@@ -757,8 +757,10 @@ class ModuleFacade
                 $modulePaths[] = $moduleInfo['path'];
             }
 
-            foreach (Finder::findFiles(self::$moduleFiles[0], self::$moduleFiles[1])->in($modulePaths)->limitDepth(1) as $file) {
-                $this->findModulesClosure($file);
+            if ($modulePaths) {
+                foreach (Finder::findFiles(self::$moduleFiles[0], self::$moduleFiles[1])->in($modulePaths)->limitDepth(1) as $file) {
+                    $this->findModulesClosure($file);
+                }
             }
         }
 

@@ -9,7 +9,6 @@
 
 namespace Devrun\Application\UI\Presenter;
 
-use Brabijan\Images\TImagePipe;
 use Devrun;
 use Flame\Application\UI\Presenter;
 use Kdyby\Translation\Translator;
