@@ -8,7 +8,7 @@ composer require devrun/framework
 
 ## Modules
 
-support modules. Module file name is Module.php or .Devrun.php
+Module file name is Module.php or .Devrun.php
 
 #### Commands
 
