@@ -13,28 +13,6 @@ parameters:
 		user:
 		password:
 
-cms:
-	administration:
-		login:
-			name: admin
-			password:
-
-
-	website:
-		defaultLanguage: %lang%
-		languages: %languages%
-		name: Application
-		title: %n %s %t
-		titleSeparator: |
-		keywords: souteze
-		description: "Application description."
-		author: Pavel
-		routePrefix: ""
-		oneWayRoutePrefix: ""
-		theme: null
-		cacheMode: static
-		cacheValue: "1"
-
 events:
 	globalDispatchFirst: true
 
@@ -59,6 +37,11 @@ imageStorage:
 	default_transform  : fit                     # Default crop transformation
 	noimage_identifier : noimage/03/no-image.png # No-image image
 	friendly_url       : FALSE                   # Create friendly URLs?
+
+migrations:
+    dir: %appDir%/../migrations # migrations base directory
+    driver: mysql               # pgsql or mysql
+    dbal: doctrine              # nextras, nette, doctrine or dibi
 
 monolog:
 	processors:
@@ -87,6 +70,8 @@ http:
 
 application:
 	errorPresenter: Front:Error
+	scanComposer: false
+	scanDirs: false
 
 session:
 	expiration: 14 days

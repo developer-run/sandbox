@@ -2,4 +2,6 @@
 return array(
     "modules" => array(
     ),
+    "debugIPs" => array(
+    ),
 );

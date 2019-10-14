@@ -16,7 +16,7 @@ $environment = $configurator->isDebugMode()
     ? 'development'
     : 'production';
 
-$configurator->addConfig(__DIR__ . '/sandbox/config/config.neon');
+$configurator->addConfig(__DIR__ . '/config/config.neon');
 if (file_exists($environmentConfig = __DIR__ . "/config/config.$environment.neon")) {
     $configurator->addConfig(__DIR__ . "/config/config.$environment.neon");
 }
