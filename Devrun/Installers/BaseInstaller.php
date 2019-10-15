@@ -71,33 +71,34 @@ class BaseInstaller implements IInstaller
 
             /*
              * update module packages.json
+             * @todo not tested yet
              */
-            $packagesDir = new \SplFileInfo($module->getPath() . $module->getRelativePackagePath());
-            $packagesDir = $packagesDir->getRealPath();
-
-            if (file_exists($packageFile = $this->baseDir . "/package.json"   )) {
-
-                // is package.json valid?
-                if ($appPackages   = json_decode(file_get_contents($packageFile), true)) {
-                    $appModuleInfo = isset($appPackages['modules']) ? $appPackages['modules'] : [];
-
-                    /** @var \SplFileInfo $file */
-                    foreach (Finder::findFiles('*.json')->in($packagesDir) as $key => $file) {
-                        $packName = $file->getBasename('.json');
-
-                        // is module json valid?
-                        if ($unExpandJson = json_decode(file_get_contents($file->getRealPath()), true)) {
-                            $expandJson   = Devrun\DI\Helpers::expand($unExpandJson, $this->parameters, true);
-
-                            $moduleJson[$packName]  = $expandJson;
-                            $appPackages['modules'] = Devrun\Utils\Arrays::array_replace_recursive_ex($appModuleInfo, $moduleJson);
-                        }
-                    }
-
-                    $string = json_encode($appPackages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-                    file_put_contents($packageFile, $string);
-                }
-            }
+//            $packagesDir = new \SplFileInfo($module->getPath() . $module->getRelativePackagePath());
+//            $packagesDir = $packagesDir->getRealPath();
+//
+//            if (file_exists($packageFile = $this->baseDir . "/package.json"   )) {
+//
+//                // is package.json valid?
+//                if ($appPackages   = json_decode(file_get_contents($packageFile), true)) {
+//                    $appModuleInfo = isset($appPackages['modules']) ? $appPackages['modules'] : [];
+//
+//                    /** @var \SplFileInfo $file */
+//                    foreach (Finder::findFiles('*.json')->in($packagesDir) as $key => $file) {
+//                        $packName = $file->getBasename('.json');
+//
+//                        // is module json valid?
+//                        if ($unExpandJson = json_decode(file_get_contents($file->getRealPath()), true)) {
+//                            $expandJson   = Devrun\DI\Helpers::expand($unExpandJson, $this->parameters, true);
+//
+//                            $moduleJson[$packName]  = $expandJson;
+//                            $appPackages['modules'] = Devrun\Utils\Arrays::array_replace_recursive_ex($appModuleInfo, $moduleJson);
+//                        }
+//                    }
+//
+//                    $string = json_encode($appPackages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+//                    file_put_contents($packageFile, $string);
+//                }
+//            }
 
 
             /*
