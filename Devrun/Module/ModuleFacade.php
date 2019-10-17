@@ -212,6 +212,14 @@ class ModuleFacade
         $this->context->addService("configurator", $configurator);
     }
 
+    /**
+     * @return Container
+     */
+    public function getContext(): Container
+    {
+        return $this->context;
+    }
+
 
     /**
      * DI setter

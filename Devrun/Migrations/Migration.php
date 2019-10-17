@@ -10,8 +10,10 @@ class Migration
 
     protected static $autoCreateNonExistDir = true;
 
+
     /**
      * run all migrations mode reset
+     * useful for testing
      *
      * @param \Nette\DI\Container $container
      */
@@ -30,7 +32,8 @@ class Migration
             \Kdyby\Doctrine\Helpers::loadFromFile($conn, $dbSnapshot);
 
         } else {
-            self::migration($container, $conn);
+            $controller = self::init($container, $conn);
+            $controller->run($action = 'run', $groups = ['structures', 'basic-data', 'dummy-data'], \Nextras\Migrations\Engine\Runner::MODE_RESET);
 
             $username = $container->parameters['database']['user'];
             $password = $container->parameters['database']['password'];
@@ -49,13 +52,32 @@ class Migration
 
     }
 
+
     /**
-     * run migration
+     * run continue
+     * useful for update
      *
      * @param \Nette\DI\Container $container
-     * @param $conn
      */
-    private static function migration(\Nette\DI\Container $container, $conn)
+    public static function continue(\Nette\DI\Container $container)
+    {
+        /** @var \Kdyby\Doctrine\EntityManager $em */
+        $em = $container->getByType('Kdyby\Doctrine\EntityManager');
+        $conn = $em->getConnection();
+
+        $controller = self::init($container, $conn);
+        $controller->run($action = 'run', $groups = ['structures', 'basic-data'], \Nextras\Migrations\Engine\Runner::MODE_CONTINUE);
+    }
+
+
+
+    /**
+     * @param \Nette\DI\Container $container
+     * @param $conn
+     *
+     * @return Controllers\ExecController
+     */
+    private static function init(\Nette\DI\Container $container, $conn)
     {
         $dbal = new \Nextras\Migrations\Bridges\DoctrineDbal\DoctrineAdapter($conn);
         $driver = new \Nextras\Migrations\Drivers\MySqlDriver($dbal);
@@ -70,8 +92,9 @@ class Migration
         $controller->addExtension('sql', new \Nextras\Migrations\Extensions\SqlHandler($driver));
         $controller->addExtension('php', new \Nextras\Migrations\Extensions\PhpHandler(['container' => $container]));
 
-        $controller->run($action = 'run', $groups = ['structures', 'basic-data', 'dummy-data'], \Nextras\Migrations\Engine\Runner::MODE_RESET);
+        return $controller;
     }
+
 
     /**
      * @param \Nette\DI\Container $container
