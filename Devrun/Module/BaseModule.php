@@ -171,6 +171,15 @@ class BaseModule implements IModule
     /**
      * @return string
      */
+    public function getGitPath()
+    {
+        return $this->getPath();
+    }
+
+
+    /**
+     * @return string
+     */
     public function getRelativePublicPath()
     {
         return '/resources/public';

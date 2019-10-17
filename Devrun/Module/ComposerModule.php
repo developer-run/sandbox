@@ -10,6 +10,9 @@
 namespace Devrun\Module;
 
 
+use Tracy\Debugger;
+use Tracy\ILogger;
+
 class ComposerModule extends BaseModule
 {
 
@@ -70,9 +73,22 @@ class ComposerModule extends BaseModule
 
         if (isset($this->composerData['version'])) {
             return $this->composerData['version'];
+
+        } else {
+
+            if ($isGit = is_dir($this->getGitPath() . "/.git")) {
+                chdir($this->getGitPath());
+
+                if ($gitVersion = exec('git describe --tags --always')) {
+                    return $gitVersion;
+                }
+
+            } else {
+                Debugger::log("{$this->getName()} module has not version, specify this in composer or overflow getGitPath in Module.php", ILogger::WARNING);
+            }
         }
 
-        return parent::getVersion();
+        return parent::getVersion() ?: "`unknown`";
     }
 
 

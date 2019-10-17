@@ -828,8 +828,6 @@ class ModuleFacade
             }
         }
 
-
-
         return $ret;
     }
 
@@ -885,6 +883,7 @@ class ModuleFacade
                 $ret[$name] = $module;
             }
         }
+
         return $ret;
     }
 
@@ -908,6 +907,7 @@ class ModuleFacade
                 $ret[$name] = $module;
             }
         }
+
         return $ret;
     }
 

@@ -16,7 +16,6 @@ class ComposerListener implements Subscriber
     public function onUpdate(ModuleFacade $moduleFacade)
     {
         $result = shell_exec('composer update --no-interaction --ansi');
-        var_dump($result);
     }
 
 

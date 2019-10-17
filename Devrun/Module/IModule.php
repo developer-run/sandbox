@@ -49,6 +49,9 @@ interface IModule
     public function getPath();
 
 
+    public function getGitPath();
+
+
     public function getRelativePublicPath();
 
 
