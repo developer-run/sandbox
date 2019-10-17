@@ -10,6 +10,7 @@
 namespace Devrun\DI;
 
 use Devrun\Doctrine\Entities\UserEntity;
+use Devrun\Listeners\ComposerListener;
 use Kdyby\Console\DI\ConsoleExtension;
 use Kdyby\Doctrine\DI\OrmExtension;
 use Kdyby\Events\DI\EventsExtension;
@@ -85,6 +86,11 @@ class CoreExtension extends CompilerExtension
                 ->addTag(ConsoleExtension::TAG_COMMAND);
         }
 
+
+        // Subscribers
+        $builder->addDefinition($this->prefix('subscriber.composer'))
+            ->setType(ComposerListener::class)
+            ->addTag(EventsExtension::TAG_SUBSCRIBER);
 
 
     }

@@ -23,7 +23,6 @@ use Nette\DI\Config\Adapters\NeonAdapter;
 use Nette\DI\Config\Adapters\PhpAdapter;
 use Nette\DI\Container;
 use Nette\FileNotFoundException;
-use Nette\PhpGenerator\ClassType;
 use Nette\SmartObject;
 use Nette\Utils\Finder;
 use Nette\Utils\Strings;
@@ -37,7 +36,7 @@ use Nette\Utils\Strings;
  * @method onInstall(ModuleFacade $moduleFacade, $module);
  * @method onUninstall(ModuleFacade $moduleFacade, $module);
  * @method onUpgrade(ModuleFacade $moduleFacade, $module);
- * @method onUpdate(ModuleFacade $moduleFacade, $module);
+ * @method onUpdate(ModuleFacade $moduleFacade);
  */
 class ModuleFacade
 {
@@ -161,8 +160,6 @@ class ModuleFacade
         $this->pageCache   = new Cache($pageStorage, 'pages');
         $this->context     = $container;
 
-//        dump($container->configurator);
-//        die();
 
         $this->libsDir    = $container->parameters['libsDir'];
         $this->modulesDir = $container->parameters['modulesDir'];
@@ -318,9 +315,10 @@ class ModuleFacade
     }
 
 
-
     /**
      * Do all actions
+     *
+     * @throws \Exception
      */
     public function update()
     {
@@ -350,6 +348,7 @@ class ModuleFacade
         }
 
         $this->reloadInfo();
+        $this->onUpdate($this);
     }
 
 
