@@ -32,7 +32,6 @@ class ComposerListener implements Subscriber
 
 
     /**
-     * @todo update only hash check
      * update composer after modules update
      *
      * @param ModuleFacade $moduleFacade
@@ -40,7 +39,23 @@ class ComposerListener implements Subscriber
     public function onUpdate(ModuleFacade $moduleFacade)
     {
         if ($this->update) {
-            shell_exec(trim("composer update {$this->tags}"));
+            $baseDir = $moduleFacade->getContext()->getParameters()['baseDir'];
+
+            if (file_exists($composerFile = $baseDir . "/composer.lock")) {
+                $lastTimeHuman = date("Y-m-d H:i:s.u", filemtime($composerFile));
+
+                $moduleConfig  = $moduleFacade->loadModuleConfig();
+                $configLatTime = $moduleConfig[ModuleFacade::COMPOSER_HASH] ?? '';
+
+                if ($lastTimeHuman != $configLatTime) {
+
+                    shell_exec(trim("composer update {$this->tags}"));
+                    $lastTimeHuman = date("Y-m-d H:i:s.u", filemtime($composerFile));
+
+                    $moduleConfig[ModuleFacade::COMPOSER_HASH] = $lastTimeHuman;
+                    $moduleFacade->saveModuleConfig($moduleConfig);
+                }
+            }
         }
 
     }

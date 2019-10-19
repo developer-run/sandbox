@@ -72,6 +72,8 @@ class ModuleFacade
 
     const ACTION_NONE = '';
 
+    const COMPOSER_HASH = 'composerHash';
+
     /** @var array */
     public $onInstall = [];
 
@@ -674,7 +676,7 @@ class ModuleFacade
     /**
      * @return array
      */
-    protected function loadModuleConfig()
+    public function loadModuleConfig()
     {
         $config = new PhpAdapter();
         return $config->load($this->getModuleConfigPath());
@@ -691,7 +693,7 @@ class ModuleFacade
     /**
      * @param $data
      */
-    protected function saveModuleConfig($data)
+    public function saveModuleConfig($data)
     {
         $config = new PhpAdapter;
 
