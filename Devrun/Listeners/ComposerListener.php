@@ -49,15 +49,17 @@ class ComposerListener implements Subscriber
 
                 if ($lastTimeHuman != $configLatTime) {
 
-                    shell_exec(trim("composer update {$this->tags}"));
-                    $lastTimeHuman = date("Y-m-d H:i:s.u", filemtime($composerFile));
+                    exec(trim("composer update {$this->tags}"), $output, $return);
 
-                    $moduleConfig[ModuleFacade::COMPOSER_HASH] = $lastTimeHuman;
-                    $moduleFacade->saveModuleConfig($moduleConfig);
+                    if ($return == 0) {
+                        $lastTimeHuman = date("Y-m-d H:i:s.u", filemtime($composerFile));
+
+                        $moduleConfig[ModuleFacade::COMPOSER_HASH] = $lastTimeHuman;
+                        $moduleFacade->saveModuleConfig($moduleConfig);
+                    }
                 }
             }
         }
-
     }
 
 
