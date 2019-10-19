@@ -12,6 +12,7 @@ namespace Devrun\DI;
 use Devrun\Doctrine\Entities\UserEntity;
 use Devrun\Listeners\ComposerListener;
 use Devrun\Listeners\MigrationListener;
+use Exception as ExceptionAlias;
 use Kdyby\Console\DI\ConsoleExtension;
 use Kdyby\Doctrine\DI\OrmExtension;
 use Kdyby\Events\DI\EventsExtension;
@@ -24,6 +25,13 @@ class CoreExtension extends CompilerExtension
     public $defaults = array(
         'cssUrlsFilterDir' => '%wwwDir%',
         'pageStorageExpiration' => '5 hours',
+        'composer' => [
+            'update' => false,
+            'tags' => '--no-interaction --ansi',
+        ],
+        'migration' => [
+            'update' => false
+        ],
     );
 
 
@@ -36,26 +44,26 @@ class CoreExtension extends CompilerExtension
 
         // repositories
         $builder->addDefinition($this->prefix('repository.user'))
-            ->setFactory('Devrun\Doctrine\Repositories\UserRepository')
+            ->setType('Devrun\Doctrine\Repositories\UserRepository')
             ->addTag(OrmExtension::TAG_REPOSITORY_ENTITY, UserEntity::class);
 
 
         // facades
         $builder->addDefinition($this->prefix('facade.user'))
-            ->setFactory('Devrun\Facades\UserFacade');
+            ->setType('Devrun\Facades\UserFacade');
 
 
         $builder->addDefinition($this->prefix('facade.module'))
-            ->setFactory('Devrun\Module\ModuleFacade')
+            ->setType('Devrun\Module\ModuleFacade')
             ->addSetup('setPageStorageExpiration', [$config['pageStorageExpiration']]);
 
 
         // system
         $builder->addDefinition($this->prefix('authorizator'))
-            ->setFactory('Devrun\Security\Authorizator');
+            ->setType('Devrun\Security\Authorizator');
 
         $builder->addDefinition($this->prefix('authenticator'))
-            ->setFactory('Devrun\Security\Authenticator')
+            ->setType('Devrun\Security\Authenticator')
             ->setInject();
 
         $builder->addDefinition($this->prefix('listener.flush'))
@@ -63,7 +71,7 @@ class CoreExtension extends CompilerExtension
             ->addTag(EventsExtension::TAG_SUBSCRIBER);
 
         $builder->addDefinition($this->prefix('security.loggedUser'))
-            ->setFactory('Devrun\Security\LoggedUser');
+            ->setType('Devrun\Security\LoggedUser');
 
 
 
@@ -90,11 +98,11 @@ class CoreExtension extends CompilerExtension
 
         // Subscribers
         $builder->addDefinition($this->prefix('subscriber.composer'))
-            ->setType(ComposerListener::class)
+            ->setFactory(ComposerListener::class, [$config['composer']['update'], $config['composer']['tags']])
             ->addTag(EventsExtension::TAG_SUBSCRIBER);
 
         $builder->addDefinition($this->prefix('subscriber.migration'))
-            ->setType(MigrationListener::class)
+            ->setFactory(MigrationListener::class, [$config['migration']['update']])
             ->addTag(EventsExtension::TAG_SUBSCRIBER);
 
 
@@ -125,7 +133,7 @@ class CoreExtension extends CompilerExtension
                 try {
                     mkdir($systemPath, 0777, true);
 
-                } catch (\Exception $e) {
+                } catch (ExceptionAlias $e) {
                     die($e->getMessage());
                 }
             }

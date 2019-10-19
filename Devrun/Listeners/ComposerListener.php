@@ -12,12 +12,38 @@ use Kdyby\Events\Subscriber;
 class ComposerListener implements Subscriber
 {
 
+    /** @var bool */
+    private $update = false;
 
-    public function onUpdate(ModuleFacade $moduleFacade)
+    /** @var string */
+    private $tags = '';
+
+
+    /**
+     * ComposerListener constructor.
+     * @param bool $update
+     * @param string $tags
+     */
+    public function __construct(bool $update, string $tags)
     {
-        $result = shell_exec('composer update --no-interaction --ansi');
+        $this->tags   = $tags;
+        $this->update = $update;
     }
 
+
+    /**
+     * @todo update only hash check
+     * update composer after modules update
+     *
+     * @param ModuleFacade $moduleFacade
+     */
+    public function onUpdate(ModuleFacade $moduleFacade)
+    {
+        if ($this->update) {
+            shell_exec(trim("composer update {$this->tags}"));
+        }
+
+    }
 
 
     function getSubscribedEvents()

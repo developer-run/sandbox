@@ -14,13 +14,28 @@ use Kdyby\Events\Subscriber;
 class MigrationListener implements Subscriber
 {
 
+    /** @var bool */
+    private $migrationUpdate = true;
+
+    /**
+     * MigrationListener constructor.
+     * @param bool $migrationUpdate
+     */
+    public function __construct(bool $migrationUpdate)
+    {
+        $this->migrationUpdate = $migrationUpdate;
+    }
+
 
     /**
      * @param ModuleFacade $moduleFacade
      */
     public function onUpdate(ModuleFacade $moduleFacade)
     {
-        Migration::continue($moduleFacade->getContext());
+        if ($this->migrationUpdate) {
+//        Migration::continue($moduleFacade->getContext());
+
+        }
 
     }
 
