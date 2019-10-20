@@ -33,17 +33,22 @@ class MigrationListener implements Subscriber
     public function onUpdate(ModuleFacade $moduleFacade)
     {
         if ($this->migrationUpdate) {
-//        Migration::continue($moduleFacade->getContext());
+            Migration::continue($moduleFacade->getContext());
 
         }
 
     }
 
 
+    /**
+     * higher number of priority is better for previously start
+     *
+     * @return array
+     */
     function getSubscribedEvents()
     {
         return [
-            "Devrun\Module\ModuleFacade::onUpdate" => ['onUpdate', 20]
+            "Devrun\Module\ModuleFacade::onUpdate" => ['onUpdate', 10]
         ];
     }
 

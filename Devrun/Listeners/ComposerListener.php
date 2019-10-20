@@ -18,16 +18,20 @@ class ComposerListener implements Subscriber
     /** @var string */
     private $tags = '';
 
+    /** @var bool */
+    private $write = true;
+
 
     /**
      * ComposerListener constructor.
      * @param bool $update
      * @param string $tags
      */
-    public function __construct(bool $update, string $tags)
+    public function __construct(bool $update, string $tags, bool $write)
     {
         $this->tags   = $tags;
         $this->update = $update;
+        $this->write  = $write;
     }
 
 
@@ -47,11 +51,11 @@ class ComposerListener implements Subscriber
                 $moduleConfig  = $moduleFacade->loadModuleConfig();
                 $configLatTime = $moduleConfig[ModuleFacade::COMPOSER_HASH] ?? '';
 
-                if ($lastTimeHuman != $configLatTime) {
+                if ($lastTimeHuman < $configLatTime) {
 
                     exec(trim("composer update {$this->tags}"), $output, $return);
 
-                    if ($return == 0) {
+                    if ($return == 0 && $this->write) {
                         $lastTimeHuman = date("Y-m-d H:i:s.u", filemtime($composerFile));
 
                         $moduleConfig[ModuleFacade::COMPOSER_HASH] = $lastTimeHuman;
@@ -63,10 +67,15 @@ class ComposerListener implements Subscriber
     }
 
 
+    /**
+     * higher number of priority is better for previously start
+     *
+     * @return array
+     */
     function getSubscribedEvents()
     {
         return [
-            "Devrun\Module\ModuleFacade::onUpdate" => ['onUpdate', 10]
+            "Devrun\Module\ModuleFacade::onUpdate" => ['onUpdate', 20]
         ];
     }
 }

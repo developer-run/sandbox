@@ -23,17 +23,17 @@ class CoreExtension extends CompilerExtension
 {
 
     public $defaults = array(
-        'cssUrlsFilterDir' => '%wwwDir%',
+        'cssUrlsFilterDir'      => '%wwwDir%',
         'pageStorageExpiration' => '5 hours',
-        'composer' => [
+        'composer'              => [
             'update' => false,
-            'tags' => '--no-interaction --ansi',
+            'write'  => false,
+            'tags'   => '--no-interaction --ansi',
         ],
-        'migration' => [
+        'migration'             => [
             'update' => false
         ],
     );
-
 
 
     public function loadConfiguration()
@@ -44,66 +44,64 @@ class CoreExtension extends CompilerExtension
 
         // repositories
         $builder->addDefinition($this->prefix('repository.user'))
-            ->setType('Devrun\Doctrine\Repositories\UserRepository')
-            ->addTag(OrmExtension::TAG_REPOSITORY_ENTITY, UserEntity::class);
+                ->setType('Devrun\Doctrine\Repositories\UserRepository')
+                ->addTag(OrmExtension::TAG_REPOSITORY_ENTITY, UserEntity::class);
 
 
         // facades
         $builder->addDefinition($this->prefix('facade.user'))
-            ->setType('Devrun\Facades\UserFacade');
+                ->setType('Devrun\Facades\UserFacade');
 
 
         $builder->addDefinition($this->prefix('facade.module'))
-            ->setType('Devrun\Module\ModuleFacade')
-            ->addSetup('setPageStorageExpiration', [$config['pageStorageExpiration']]);
+                ->setType('Devrun\Module\ModuleFacade')
+                ->addSetup('setPageStorageExpiration', [$config['pageStorageExpiration']]);
 
 
         // system
         $builder->addDefinition($this->prefix('authorizator'))
-            ->setType('Devrun\Security\Authorizator');
+                ->setType('Devrun\Security\Authorizator');
 
         $builder->addDefinition($this->prefix('authenticator'))
-            ->setType('Devrun\Security\Authenticator')
-            ->setInject();
+                ->setType('Devrun\Security\Authenticator')
+                ->setInject();
 
         $builder->addDefinition($this->prefix('listener.flush'))
-            ->setFactory('Devrun\Listeners\FlushListener', [$builder->parameters['autoFlush']])
-            ->addTag(EventsExtension::TAG_SUBSCRIBER);
+                ->setFactory('Devrun\Listeners\FlushListener', [$builder->parameters['autoFlush']])
+                ->addTag(EventsExtension::TAG_SUBSCRIBER);
 
         $builder->addDefinition($this->prefix('security.loggedUser'))
-            ->setType('Devrun\Security\LoggedUser');
-
-
+                ->setType('Devrun\Security\LoggedUser');
 
 
         // Commands
         $commands = array(
             // 'cache' => 'Devrun\Caching\Commands\Cache',
-            'moduleUpdate' => 'Devrun\Module\Commands\Update',
-            'moduleInstall' => 'Devrun\Module\Commands\Install',
-            'moduleUninstall' => 'Devrun\Module\Commands\Uninstall',
-            'moduleUpgrade' => 'Devrun\Module\Commands\Upgrade',
-            'moduleRegister' => 'Devrun\Module\Commands\Register',
+            'moduleUpdate'     => 'Devrun\Module\Commands\Update',
+            'moduleInstall'    => 'Devrun\Module\Commands\Install',
+            'moduleUninstall'  => 'Devrun\Module\Commands\Uninstall',
+            'moduleUpgrade'    => 'Devrun\Module\Commands\Upgrade',
+            'moduleRegister'   => 'Devrun\Module\Commands\Register',
             'moduleUnregister' => 'Devrun\Module\Commands\UnRegister',
-            'moduleList' => 'Devrun\Module\Commands\List',
-            'moduleCreate' => 'Devrun\Module\Commands\Create',
-            'moduleDelete' => 'Devrun\Module\Commands\Delete',
+            'moduleList'       => 'Devrun\Module\Commands\List',
+            'moduleCreate'     => 'Devrun\Module\Commands\Create',
+            'moduleDelete'     => 'Devrun\Module\Commands\Delete',
         );
         foreach ($commands as $name => $cmd) {
             $builder->addDefinition($this->prefix(lcfirst($name) . 'Command'))
-                ->setFactory("{$cmd}Command")
-                ->addTag(ConsoleExtension::TAG_COMMAND);
+                    ->setFactory("{$cmd}Command")
+                    ->addTag(ConsoleExtension::TAG_COMMAND);
         }
 
 
         // Subscribers
         $builder->addDefinition($this->prefix('subscriber.composer'))
-            ->setFactory(ComposerListener::class, [$config['composer']['update'], $config['composer']['tags']])
-            ->addTag(EventsExtension::TAG_SUBSCRIBER);
+                ->setFactory(ComposerListener::class, [$config['composer']['update'], $config['composer']['tags'], $config['composer']['write']])
+                ->addTag(EventsExtension::TAG_SUBSCRIBER);
 
         $builder->addDefinition($this->prefix('subscriber.migration'))
-            ->setFactory(MigrationListener::class, [$config['migration']['update']])
-            ->addTag(EventsExtension::TAG_SUBSCRIBER);
+                ->setFactory(MigrationListener::class, [$config['migration']['update']])
+                ->addTag(EventsExtension::TAG_SUBSCRIBER);
 
 
     }
@@ -123,8 +121,8 @@ class CoreExtension extends CompilerExtension
 
     private function checkDirStructure()
     {
-        $builder = $this->getContainerBuilder();
-        $systemPaths=[
+        $builder     = $this->getContainerBuilder();
+        $systemPaths = [
             $builder->parameters['wwwCacheDir'],
         ];
 
