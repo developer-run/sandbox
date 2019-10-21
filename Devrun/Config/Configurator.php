@@ -18,6 +18,7 @@ use Kdyby\Console\DI\ConsoleExtension;
 use Kdyby\Doctrine\DI\OrmExtension;
 use Kdyby\Events\DI\EventsExtension;
 use Kdyby\Monolog\DI\MonologExtension;
+use Kdyby\SessionPanel\DI\SessionPanelExtension;
 use Kdyby\Translation\DI\TranslationExtension;
 use Nette\DI;
 use Nette\DI\Compiler;
@@ -286,6 +287,7 @@ class Configurator extends \Nette\Configurator
             $compiler->addExtension('migrations', new MigrationsExtension());
             $compiler->addExtension('monolog', new MonologExtension());
             $compiler->addExtension('modules', new ModulesExtension());
+            $compiler->addExtension('debugger.session', new SessionPanelExtension());
 
             $compiler->addExtension('core', new Devrun\DI\CoreExtension());
             $compiler->addExtension('imageStorage', new ImagesExtension());
