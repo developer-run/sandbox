@@ -9,6 +9,7 @@ parameters:
 	securePage: true
 	database:
 		host: localhost
+		driver: pdo_mysql
 		dbname:
 		user:
 		password:
@@ -83,7 +84,7 @@ services:
 
 doctrine:
 	charset: UTF8
-	driver: pdo_mysql
+	driver: %database.driver%
 	host: %database.host%
 	user: %database.user%
 	password: %database.password%
