@@ -154,6 +154,18 @@ class UserEntity
     protected $privacy = false;
 
     /**
+     * @var string
+     * @ORM\Column(type="text", length=65536, nullable=true)
+     */
+    protected $privacyPolicyLegalText;
+
+    /**
+     * @var string enum
+     * @ORM\Column(type="text", length=65536, nullable=true)
+     */
+    protected $privacyPolicyConsentText;
+
+    /**
      * @var string enum
      * @ORM\Column(type="string")
      */

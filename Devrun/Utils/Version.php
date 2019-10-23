@@ -19,6 +19,9 @@ class Version
      */
     public static function get()
     {
+        $commitInfo = trim(exec('git log --pretty=format:\'%h,%p,%ci\' --abbrev-commit'));
+
+
         $commitInfo = trim(exec('git log -1 --pretty=format:\'%h - %s (%ci)\' --abbrev-commit'));
         dump($commitInfo);
 

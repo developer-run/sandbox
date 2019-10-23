@@ -84,7 +84,7 @@ class ComposerModule extends BaseModule
                 }
 
             } else {
-                Debugger::log("{$this->getName()} module has not version, specify this in composer or overflow getGitPath in Module.php", ILogger::WARNING);
+                Debugger::log("`{$this->getName()}` module has not version, specify this in composer or overflow getGitPath in Module.php", ILogger::WARNING);
             }
         }
 

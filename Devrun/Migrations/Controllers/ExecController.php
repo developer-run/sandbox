@@ -11,12 +11,17 @@ namespace Devrun\Migrations\Controllers;
 
 use Nextras\Migrations\Controllers\BaseController;
 use Nextras\Migrations\Engine;
-use Nextras\Migrations\Printers;
 
 class ExecController extends BaseController
 {
 
 
+    /**
+     * @param null $action
+     * @param array $groups
+     * @param string $mode
+     * @throws \Nextras\Migrations\Exception
+     */
     public function run($action = null, $groups = [], $mode = Engine\Runner::MODE_CONTINUE)
     {
         $this->processArguments($action, $groups, $mode);
@@ -37,7 +42,12 @@ class ExecController extends BaseController
     }
 
 
-    private function processArguments($action, array $groups = [], $mode)
+    /**
+     * @param $action
+     * @param array $groups
+     * @param string $mode
+     */
+    private function processArguments($action, array $groups = [], $mode = Engine\Runner::MODE_CONTINUE)
     {
         $help = false;
         $useGroups = $error = FALSE;
@@ -85,7 +95,8 @@ class ExecController extends BaseController
 
     protected function createPrinter()
     {
-        return new Printers\Console();
+//        return new Printers\DevNull();
+        return new \Devrun\Migrations\Printers\Console();
     }
 
 }

@@ -451,21 +451,31 @@ class ModuleFacade
             $dependencyResolver->testInstall($module);
         }
 
-        foreach ($module->getInstallers() as $class) {
+        foreach ($module->getInstallers() as $class => $args) {
+
+            if (!is_array($args)) {
+                $class = $args;
+                $args  = [];
+            }
 
             $this->reloadSystemContainer();
 
             try {
-                $installer = $this->context->createInstance($class);
+                $installer = $this->context->createInstance($class, $args);
                 $installer->install($module);
 
             } catch (\Exception $e) {
-                foreach ($module->getInstallers() as $class2) {
+                foreach ($module->getInstallers() as $class2 => $args2) {
                     if ($class === $class2) {
                         break;
                     }
 
-                    $installer = $this->context->createInstance($class2);
+                    if (!is_array($args2)) {
+                        $class2 = $args2;
+                        $args2  = [];
+                    }
+
+                    $installer = $this->context->createInstance($class2, $args2);
                     $installer->uninstall($module);
                 }
 

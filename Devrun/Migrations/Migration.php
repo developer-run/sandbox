@@ -16,6 +16,7 @@ class Migration
      * useful for testing
      *
      * @param \Nette\DI\Container $container
+     * @throws \Nextras\Migrations\Exception
      */
     public static function reset(\Nette\DI\Container $container)
     {
@@ -46,7 +47,7 @@ class Migration
             }
 
             $command = "mysqldump -u $username -p$password $dbname > $dbSnapshot";
-            exec($command);
+            shell_exec($command);
         }
 
 
@@ -58,6 +59,7 @@ class Migration
      * useful for update
      *
      * @param \Nette\DI\Container $container
+     * @throws \Nextras\Migrations\Exception
      */
     public static function continue(\Nette\DI\Container $container)
     {
@@ -66,7 +68,7 @@ class Migration
         $conn = $em->getConnection();
 
         $controller = self::init($container, $conn);
-        $controller->run($action = 'run', $groups = ['structures', 'basic-data'], \Nextras\Migrations\Engine\Runner::MODE_CONTINUE);
+        $controller->run($action = 'run', $groups = ['structures', 'basic-data', 'production'], \Nextras\Migrations\Engine\Runner::MODE_CONTINUE);
     }
 
 

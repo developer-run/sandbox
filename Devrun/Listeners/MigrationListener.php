@@ -4,6 +4,7 @@
 namespace Devrun\Listeners;
 
 use Devrun\Migrations\Migration;
+use Devrun\Module\IModule;
 use Devrun\Module\ModuleFacade;
 use Kdyby\Events\Subscriber;
 
@@ -34,9 +35,19 @@ class MigrationListener implements Subscriber
     {
         if ($this->migrationUpdate) {
             Migration::continue($moduleFacade->getContext());
-
         }
+    }
 
+
+    /**
+     * @param ModuleFacade $moduleFacade
+     * @param IModule $module
+     */
+    public function onInstall(ModuleFacade $moduleFacade, IModule $module)
+    {
+        if ($this->migrationUpdate) {
+            Migration::continue($moduleFacade->getContext());
+        }
     }
 
 
@@ -48,7 +59,8 @@ class MigrationListener implements Subscriber
     function getSubscribedEvents()
     {
         return [
-            "Devrun\Module\ModuleFacade::onUpdate" => ['onUpdate', 10]
+            "Devrun\Module\ModuleFacade::onUpdate" => ['onUpdate', 10],
+            "Devrun\Module\ModuleFacade::onInstall",
         ];
     }
 
