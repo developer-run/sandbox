@@ -2,7 +2,7 @@
   "name": "devrun/sandbox",
   "description": "DevRun project",
   "keywords": ["cms", "nette", "devrun", "project"],
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "homepage": "http://devrun.cz",
   "license": "proprietary",
   "authors": [
@@ -21,7 +21,7 @@
   ],
   "extra": {
     "branch-alias": {
-      "dev-master": "0.1-dev"
+      "dev-master": "0.8-dev"
     }
   }
 }

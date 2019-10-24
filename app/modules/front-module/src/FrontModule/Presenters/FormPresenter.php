@@ -11,8 +11,6 @@ namespace FrontModule\Presenters;
 
 use Devrun\Doctrine\Entities\UserEntity;
 use Devrun\Doctrine\Repositories\UserRepository;
-use FrontModule\Control\ITimeControlFactory;
-use FrontModule\Entities\TestSitesEntity;
 use FrontModule\Entities\UserTestSiteEntity;
 use FrontModule\Forms\IRegistrationFormFactory;
 use FrontModule\Forms\RegistrationFormFactory;
@@ -26,9 +24,6 @@ class FormPresenter extends BaseAppPresenter
 
     /** @var IRegistrationFormFactory @inject */
     public $registrationFormFactory;
-
-    /** @var ITimeControlFactory @inject */
-    public $timeControlFactory;
 
     /** @var UserTestSiteRepository @inject */
     public $userTestSiteRepository;

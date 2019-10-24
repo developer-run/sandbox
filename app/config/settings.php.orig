@@ -1,6 +1,8 @@
 <?php
 
 return array(
-	"modules" => array(
-	),
+    "modules" => array(
+    ),
+    "debugIPs" => array(
+    ),
 );
