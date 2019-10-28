@@ -10,6 +10,7 @@ parameters:
 	database:
 		host: localhost
 		driver: pdo_mysql
+		path:
 		dbname:
 		user:
 		password:
@@ -86,12 +87,13 @@ doctrine:
 	charset: UTF8
 	driver: %database.driver%
 	host: %database.host%
+	path: %database.path%
 	user: %database.user%
 	password: %database.password%
 	dbname: %database.dbname%
 	autoGenerateProxyClasses: %debugMode%
-	proxyDir: "%tempDir%/proxies"
-	proxyNamespace: "proxy"
+	proxyDir: %tempDir%/proxies
+	proxyNamespace: proxy
 	cacheClass: DoctrineModule\Cache
 	secondLevelCache:
 		enabled: true

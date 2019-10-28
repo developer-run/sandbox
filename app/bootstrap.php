@@ -18,7 +18,7 @@ $environment = $configurator->isDebugMode()
 
 $configurator->addConfig(__DIR__ . '/config/config.neon');
 if (file_exists($environmentConfig = __DIR__ . "/config/config.$environment.neon")) {
-    $configurator->addConfig(__DIR__ . "/config/config.$environment.neon");
+    $configurator->addConfig($environmentConfig);
 }
 
 if (($agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'admin') == 'admin') {

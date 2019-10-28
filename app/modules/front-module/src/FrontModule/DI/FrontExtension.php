@@ -65,9 +65,9 @@ class FrontExtension extends CompilerExtension implements IPresenterMappingProvi
         /*
          * controls
          */
-        $builder->addDefinition($this->prefix('form.registrationFormFactory'))
-            ->setImplement('FrontModule\Forms\IRegistrationFormFactory')
-            ->setInject(true);
+//        $builder->addDefinition($this->prefix('form.registrationFormFactory'))
+//            ->setImplement('FrontModule\Forms\IRegistrationFormFactory')
+//            ->setInject(true);
 
         $builder->addDefinition($this->prefix('form.secureFormFactory'))
             ->setImplement('FrontModule\Forms\ISecureFormFactory')
@@ -78,12 +78,6 @@ class FrontExtension extends CompilerExtension implements IPresenterMappingProvi
             ->setImplement('FrontModule\Control\IJSEnvironmentControl')
             ->setInject();
 
-        $builder->addDefinition($this->prefix('control.timeControl'))
-            ->setImplement('FrontModule\Control\ITimeControlFactory')
-            ->setInject();
-
-        $builder->addDefinition($this->prefix('control.flashMessageControl'))
-            ->setImplement('FrontModule\Control\IFlashMessageControl');
 
 
 

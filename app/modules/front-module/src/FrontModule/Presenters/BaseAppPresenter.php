@@ -3,10 +3,8 @@
 namespace FrontModule\Presenters;
 
 use Devrun\Application\UI\Presenter\BasePresenter;
-use Devrun\CmsModule\ArticleModule\Presenters\TArticlesPipe;
-use Devrun\CmsModule\Presenters\TImageStoragePipe;
+use Devrun\Application\UI\Presenter\TImgStoragePipe;
 use Devrun\CmsModule\Utils\Common;
-use FrontModule\Control\IFlashMessageControl;
 use FrontModule\Filters\CommonFilter;
 
 /**
@@ -16,15 +14,13 @@ class BaseAppPresenter extends BasePresenter
 {
     const SESSION_SECTION = 'code';
 
-    use TArticlesPipe;
-    use TImageStoragePipe;
+//    use TArticlesPipe;
+    use TImgStoragePipe;
 
 
     /** @var CommonFilter @inject */
     public $commonFilter;
 
-    /** @var IFlashMessageControl @inject */
-    public $flashMessageControl;
 
 
 

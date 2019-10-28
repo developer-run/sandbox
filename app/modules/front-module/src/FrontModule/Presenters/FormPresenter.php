@@ -22,8 +22,8 @@ use Tracy\Debugger;
 class FormPresenter extends BaseAppPresenter
 {
 
-    /** @var IRegistrationFormFactory @inject */
-    public $registrationFormFactory;
+//    /** @var IRegistrationFormFactory @inject */
+//    public $registrationFormFactory;
 
     /** @var UserTestSiteRepository @inject */
     public $userTestSiteRepository;
