@@ -72,9 +72,9 @@ class Configurator extends \Nette\Configurator
             }
 
             $this->parameters = array_merge($this->parameters, $this->getSandboxParameters());
-            $this->parameters = array_merge($this->parameters, $this->getDevrunDefaultParameters($this->parameters));
-
             $this->validateConfiguration();
+
+            $this->parameters = array_merge($this->parameters, $this->getDevrunDefaultParameters($this->parameters));
             $this->loadModulesConfiguration();
 
             $this->enableDebugger($this->parameters['logDir']);
