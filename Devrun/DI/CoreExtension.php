@@ -12,6 +12,8 @@ namespace Devrun\DI;
 use Devrun\Doctrine\Entities\UserEntity;
 use Devrun\Listeners\ComposerListener;
 use Devrun\Listeners\MigrationListener;
+use Devrun\Security\ControlVerifierReaders\AnnotationReader;
+use Devrun\Security\ControlVerifiers\ControlVerifier;
 use Exception as ExceptionAlias;
 use Kdyby\Console\DI\ConsoleExtension;
 use Kdyby\Doctrine\DI\OrmExtension;
@@ -59,6 +61,15 @@ class CoreExtension extends CompilerExtension
 
 
         // system
+        $builder->addDefinition($this->prefix('controlVerifier'))
+                  ->setType(ControlVerifier::class);
+
+        $builder->addDefinition($this->prefix('controlVerifierReader'))
+                  ->setType(AnnotationReader::class);
+
+        $builder->getDefinition('user')
+                ->setFactory('Devrun\Security\User');
+
         $builder->addDefinition($this->prefix('authorizator'))
                 ->setType('Devrun\Security\Authorizator');
 
@@ -73,6 +84,9 @@ class CoreExtension extends CompilerExtension
         $builder->addDefinition($this->prefix('security.loggedUser'))
                 ->setType('Devrun\Security\LoggedUser');
 
+        // http
+        $builder->getDefinition('httpResponse')
+                  ->addSetup('setHeader', array('X-Powered-By', 'Nette Framework && Devrun:Framework'));
 
         // Commands
         $commands = array(

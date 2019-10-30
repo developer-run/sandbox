@@ -29,9 +29,12 @@ class Authenticator implements Nette\Security\IAuthenticator
      *
      * @param UserFacade $userFacade
      */
-    function __construct(UserFacade $userFacade)
+    function __construct()
+//    function __construct(UserFacade $userFacade)
     {
-        $this->userFacade = $userFacade;
+
+
+//        $this->userFacade = $userFacade;
     }
 
 
