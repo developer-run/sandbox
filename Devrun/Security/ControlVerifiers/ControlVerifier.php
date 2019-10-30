@@ -15,9 +15,9 @@ namespace Devrun\Security\ControlVerifiers;
 use Devrun\Security\IControlVerifier;
 use Devrun\Security\IControlVerifierReader;
 use Nette\Application\ForbiddenRequestException;
-use Nette\Application\UI\PresenterComponentReflection;
+use Nette\Application\UI\ComponentReflection;
+use Nette\Application\UI\MethodReflection;
 use Nette\InvalidArgumentException;
-use Nette\Reflection\Method;
 use Nette\Security\User;
 use Nette\SmartObject;
 
@@ -79,23 +79,23 @@ class ControlVerifier implements IControlVerifier
      */
 	public function checkRequirements($element)
 	{
-		if ($element instanceof Method) {
+		if ($element instanceof MethodReflection) {
 			return $this->checkMethod($element);
 		}
 
-		if ($element instanceof PresenterComponentReflection) {
+		if ($element instanceof ComponentReflection) {
 			return $this->checkPresenter($element);
 		}
 
-		throw new InvalidArgumentException("Argument must be instance of 'Nette\Reflection\Method' OR 'Nette\Application\UI\PresenterComponentReflection'");
+		throw new InvalidArgumentException("Argument must be instance of 'Nette\Application\UI\MethodReflection' OR 'Nette\Application\UI\ComponentReflection'");
 	}
 
 
 	/**
-	 * @param PresenterComponentReflection $element
+	 * @param ComponentReflection $element
 	 * @return bool
 	 */
-	protected function isPresenterAllowedCached(PresenterComponentReflection $element)
+	protected function isPresenterAllowedCached(ComponentReflection $element)
 	{
 		if (!array_key_exists($element->name, $this->_presenterAllowed)) {
 			$this->_presenterAllowed[$element->name] = $this->isPresenterAllowed($element);
@@ -106,10 +106,10 @@ class ControlVerifier implements IControlVerifier
 
 
 	/**
-	 * @param Method $element
+	 * @param MethodReflection $element
 	 * @return mixed
 	 */
-	protected function isMethodAllowedCached(Method $element)
+	protected function isMethodAllowedCached(MethodReflection $element)
 	{
 		if (!array_key_exists($element->name, $this->_methodAllowed)) {
 			$this->_methodAllowed[$element->name] = $this->isMethodAllowed($element);
@@ -120,20 +120,21 @@ class ControlVerifier implements IControlVerifier
 
 
 	/**
-	 * @param PresenterComponentReflection $element
+	 * @param ComponentReflection $element
 	 * @return bool
 	 */
-	protected function checkPresenter(PresenterComponentReflection $element)
+	protected function checkPresenter(ComponentReflection $element)
 	{
 		return TRUE;
 	}
 
 
-	/**
-	 * @param Method $element
-	 * @return bool
-	 */
-	protected function checkMethod(Method $element)
+    /**
+     * @param MethodReflection $element
+     * @return bool
+     * @throws ForbiddenRequestException
+     */
+	protected function checkMethod(MethodReflection $element)
 	{
 		$class = $element->class;
 		$name = $element->name;
@@ -147,7 +148,7 @@ class ControlVerifier implements IControlVerifier
 			if (!in_array($this->user->getId(), $users)) {
 				$exception = "Access denied for your username: '{$this->user->getId()}'. Require: '" . implode(', ', $users) . "'";
 			} else {
-				return;
+				return true;
 			}
 		} // roles
 		else if (isset($schema[$name]['roles']) && count($schema[$name]['roles']) > 0) {
@@ -157,16 +158,19 @@ class ControlVerifier implements IControlVerifier
 			if (count(array_intersect($userRoles, $roles)) == 0) {
 				$exception = "Access denied for your roles: '" . implode(', ', $userRoles) . "'. Require one of: '" . implode(', ', $roles) . "'";
 			} else {
-				return;
+				return true;
 			}
 		} // resource & privilege
 		else if (isset($schema[$name]['resource']) && $schema[$name]['resource']) {
 			if (!$this->user->isAllowed($schema[$name]['resource'], $schema[$name]['privilege'])) {
 				$exception = "Access denied for resource: {$schema[$name]['resource']}" . ($schema[$name]['privilege'] ? " and privilege: {$schema[$name]['privilege']}" : '');
 			} else {
-				return;
+				return true;
 			}
-		}
+
+		} else {
+            $exception = "Access denied other";
+        }
 
 		if ($exception) {
 			throw new ForbiddenRequestException($exception);
