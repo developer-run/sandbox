@@ -4,7 +4,6 @@ namespace FrontModule\Presenters;
 
 use Devrun\Application\UI\Presenter\BasePresenter;
 use Devrun\Application\UI\Presenter\TImgStoragePipe;
-use Devrun\CmsModule\Utils\Common;
 use FrontModule\Filters\CommonFilter;
 
 /**
@@ -29,12 +28,9 @@ class BaseAppPresenter extends BasePresenter
     {
         parent::beforeRender();
 
-        $cmsClass = Common::isAdminRequest() ? ' in' : null;
-
         $this->template->production = $this->context->parameters['productionMode'];
-        $this->template->pageClass = trim("main-wrapper ajax-fade {$this->template->pageClass}{$cmsClass}");
+        $this->template->pageClass = trim("main-wrapper ajax-fade {$this->template->pageClass}");
         $this->template->locale = $this->translator->getLocale();
-//        $this->template->analyticCode = 'UA-113969633-2';
     }
 
 
