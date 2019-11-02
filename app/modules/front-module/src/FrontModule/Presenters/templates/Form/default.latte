@@ -1,0 +1,136 @@
+{block content|trim}
+	<section id="form" class="car-lights animated" style="animation-delay: 1s" data-anim="swing-out-top-bck">
+		<div class="form-inner">
+
+			<figure class="logo">
+{*				{img 'images/q7/audi-logo.png'}*}
+
+				<img src="{$basePath}/resources/frontModule/img/transparent.png" width="250">
+
+			</figure>
+
+			<div class="container container-time bounceInDown animated">
+
+			</div>
+
+			<div class="container container-desc-top bounceIn animated" style="animation-delay: 800ms;">
+
+
+
+				<div class="description-top">
+					<h1 class="text-primary">Lorem Ipsum</h1>
+{*					<h1 n:article="form.text header simple" class="text-primary">{article |noescape}</h1>*}
+				</div>
+			</div>
+
+			<div class="container container-desc-bottom">
+
+				<div class="description-bottom wow fadeInUp" style="animation-delay: 800ms">
+{*					<p n:article="form.text subHeader simple" class="text-primary">{article |noescape}</p>*}
+					<p class="text-primary">Loremn</p>
+				</div>
+			</div>
+
+			<div class="container container-form wow fadeInUp" style="animation-delay: 800ms">
+				{form registrationForm}
+					<div class="alert alert-danger" n:if="$form->hasErrors()">
+						<p n:foreach="$form->errors as $error">{$error}</p>
+					</div>
+
+					<div class="form-row">
+						<div class="col-md-6">
+							{formContainer user}
+								<div class="form-group required">
+									{label name /}
+									{input name}
+								</div>
+
+								<div class="form-group required">
+									{label email /}
+									{input email}
+								</div>
+							{/formContainer}
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group required">
+								{formContainer user}
+									{label phone /}
+									{input phone}
+								{/formContainer}
+							</div>
+
+							<div class="form-group required">
+								{label testSite /}
+								{input testSite}
+							</div>
+						</div>
+					</div>
+
+
+					<div id="privacy" class="form-group required checkbox-table text-center">
+						<div class="m-b-15 d-inline-block">
+							<input n:name="privacy">
+							<label n:name="privacy">
+								<p id="privacy-label" class="checkbox-col">Souhlas</p>
+							</label>
+	{*						<span class="privacy" data-toggle="modal" data-target="#privacyModal">osobních údajů</span>.*}
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12">
+							{input send class=>'btn btn-danger'}
+						</div>
+					</div>
+				{/form}
+			</div>
+		</div>
+	</section>
+
+    {include modal}
+
+	<script>
+        dataLayer.push({'ga_event': 'form', 'pageview': '/form', 'eventCategory': 'form view', 'eventAction': 'form view'});
+	</script>
+{/block}
+
+{define modal}
+	<div class="modal fadeIn" id="privacyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="_modal-header text-right">
+					<label data-dismiss="modal" aria-label="Close" class="close">❌</label>
+				</div>
+				<div class="modal-body">
+					<h2>Souhlas se zpracováním osobních údajů</h2>
+					<p class="text-left">
+						V souladu se zněním Obecného nařízení o ochraně osobních údajů (Nařízení (EU) 2016/679) tímto uděluji společnosti
+						Porsche Česká republika, s.r.o., IČO 256 54 012, se sídlem Radlická 740/113d, 158 00 Praha 5 (dále jen „Porsche“), i vybranému
+						smluvnímu partnerovi souhlas se zpracováním mnou uvedených osobních údajů (jména, příjmení, e-mailové adresy, telefonního čísla, případně
+						dalších mnou uvedených osobních údajů) k&nbsp;marketingovým účelům, tedy k&nbsp;zasílání personalizovaných marketingových nabídek ohledně
+						produktů a služeb značek Volkswagen, Volkswagen Užitkové vozy, Audi a SEAT.
+						<br><br>
+						Dále prohlašuji a potvrzuji, že jsem byl ze strany Porsche informován a poučen o možnosti uplatnit svá práva subjektu
+						údajů za podmínek stanovených právními předpisy na ochranu osobních údajů, konkrétně právo:
+						<br><br>
+						(i) na přístup k osobním údajům;<br><br>
+						(ii) na opravu či doplnění nepřesných nebo nepravdivých osobních údajů;<br><br>
+						(iii) na výmaz osobních údajů, nejsou-li již osobní údaje potřebné pro účely, pro které
+						byly shromážděny či jinak zpracovány, anebo zjistí-li se, že byly zpracovávány protiprávně;<br><br>
+						(iv) na omezení zpracování osobních údajů;<br><br>
+						(v) na přenositelnost údajů;<br><br>
+						(vi) vznést námitku, po níž zpracování osobních údajů bude ukončeno, neprokáže-li se, že&nbsp;existují závažné
+						oprávněné důvody pro zpracování, jež převažují nad zájmy subjektu údajů nebo jeho právy a svobodami, zejména, je-li důvodem
+						případné vymáhání právních nároků;<br><br>
+						(vii) podat stížnost k Úřadu pro ochranu osobních údajů.<br><br>
+						Jsem si vědom toho, že tento souhlas se zpracováním osobních údajů, který je udělen na dobu 10 let ode dne
+						jeho udělení, mohu kdykoli odvolat na <a href="mailto:dpo@porsche.co.cz">dpo@porsche.co.cz</a>, a že bližší informace o mých právech a zpracování mých osobních
+						údajů ze strany Porsche jsou dostupné na <a href="http://www.porsche.co.cz/osobni-udaje" target="_blank">http://www.porsche.co.cz/osobni-udaje</a> a také u pověřence Porsche pro ochranu osobních
+						údajů na e-mailové adrese <a href="mailto:dpo@porsche.co.cz">dpo@porsche.co.cz</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{/define}
