@@ -3,13 +3,11 @@
  * @param array    $flashes  flash messages
  *}
 <!DOCTYPE html>
-<!--[if lte IE 8 ]><html class="ie ie8 lte8 lte9 oldie" lang="cs"><![endif]-->
-<!--[if IE 9 ]><html class="ie ie9 lte9" lang="cs"><![endif]-->
-<!--[if !(IE)]><!--><html class="not-ie" lang="cs"><!--<![endif]-->
+<html lang="cs">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta content="cs" http-equiv="Content-language">
 	<meta name="description" content="">
 	<meta name="keywords" content="">
@@ -25,17 +23,16 @@
 	{*{control jsEnvironmentControl}*}
 	<script type="application/javascript">var dataLayer = dataLayer || []; // Google Tag Manager</script>
 	{if $production}
-		<link data-pf-placeholder="head" rel="stylesheet" type="text/css" media="screen" href="{$basePath}/css/app.min.css?rel=1566987003251">
+		<link data-pf-placeholder="head" rel="stylesheet" type="text/css" media="screen" href="{$basePath}/resources/frontModule/css/style.min.css?rel=1566987003251">
 		{*{include "#gtm-head.latte"}*}
 	{else}
-		{*<!-- build:css {$basePath}/css/q7-audi.min.css -->*}
-		<link data-pf-placeholder="head" rel="stylesheet" type="text/css" media="screen" href="{$basePath}/assets/animate.css/animate.min.css">
-		<link data-pf-placeholder="head" rel="stylesheet" type="text/css" media="screen" href="{$basePath}/css/master.css?v=39">
+		{*<!-- build:css {$basePath}/css/style.min.css -->*}
+		<link data-pf-placeholder="head" rel="stylesheet" type="text/css" media="screen" href="{$basePath}/resources/frontModule/css/style.css">
 		{*<!-- endbuild -->*}
 	{/if}
 
 	{*================== BEGIN BASE JS ==================*}
-	<script type="application/javascript" data-pf-placeholder="scripts" src="{$basePath}/assets/jquery/dist/jquery.min.js"></script>
+{*	<script type="application/javascript" data-pf-placeholder="scripts" src="{$basePath}/assets/jquery/dist/jquery.min.js"></script>*}
 	{*================== END BASE JS ==================*}
 	{block head}{/block}
 {*	{include "#gtm-head.latte"}*}
@@ -54,16 +51,6 @@
 			</main>
 
 			<div id="preloaded-images">
-				<img src="{$basePath}/images/car.jpg" width="1" height="1" alt="" />
-				<img src="{$basePath}/images/q7/car-anim3/car-sator-overlay.png" width="1" height="1" alt="" />
-				<img src="{$basePath}/images/q7/car-anim3/car-front_01.jpg" width="1" height="1" alt="" />
-				<img src="{$basePath}/images/q7/car-anim3/car-front_02.jpg" width="1" height="1" alt="" />
-				<img src="{$basePath}/images/q7/car-anim3/car-front_03.jpg" width="1" height="1" alt="" />
-				<img src="{$basePath}/images/q7/car-anim3/car-front_04.jpg" width="1" height="1" alt="" />
-				<img src="{$basePath}/images/q7/car-anim/car-front_01-mobile.jpg" width="1" height="1" alt="" />
-				<img src="{$basePath}/images/q7/car-anim/car-front_02-mobile.jpg" width="1" height="1" alt="" />
-				<img src="{$basePath}/images/q7/car-anim/car-front_03-mobile.jpg" width="1" height="1" alt="" />
-				<img src="{$basePath}/images/q7/car-anim/car-front_04-mobile.jpg" width="1" height="1" alt="" />
 			</div>
 		</div>
 	</div>
@@ -71,29 +58,31 @@
 	{block scripts}
 		{*================== BEGIN BASE JS ==================*}
 		{if $production}
-			<script type="application/javascript" data-pf-placeholder="scripts" src="{$basePath}/js/app.js?rel=1566987003250"></script>
+			<script type="application/javascript" data-pf-placeholder="scripts" src="{$basePath}/resources/frontModule/js/app.min.js?rel=1566987003250"></script>
 		{else}
-			{*<script type="application/javascript" src="{$basePath}/assets/bootstrap/js/popover.js"></script>*}
-			{*<script type="application/javascript" src="{$basePath}/assets/bootstrap/js/tooltip.js"></script>*}
 			<!-- build:js {$basePath}/js/q7-audi.min.js -->
-			<script type="application/javascript" src="{$basePath}/assets/bootstrap/dist/js/bootstrap.min.js"></script>
-			<script type="application/javascript" src="{$basePath}/assets/nette.ajax.js/nette.ajax.js"></script>
-			<script type="application/javascript" src="{$basePath}/assets/nette.ajax.js/extensions/diagnostics.dumps.ajax.js"></script>
-			<script type="application/javascript" src="{$basePath}/assets/nette.ajax.js/extensions/fidRemove.ajax.js"></script>
-			<script type="application/javascript" src="{$basePath}/assets/history.nette.ajax.js/client-side/history.ajax.js"></script>
-			<script type="application/javascript" src="{$basePath}/assets/wow/wow.js"></script>
-			<script type="application/javascript" src="{$basePath}/js/jquery.smooth-scroll-nivea.js"></script>
-			<script type="application/javascript" src="{$basePath}/js/live-form-validation-nivea.js"></script>
-{*			<script type="application/javascript" src="{$basePath}/js/select2-nivea.js"></script>*}
-			<script type="application/javascript" src="{$basePath}/js/modernizr.js"></script>
+			<script type="application/javascript" src="{$basePath}/resources/frontModule/js/jquery.min.js"></script>
+			<script type="application/javascript" src="{$basePath}/resources/frontModule/js/popper.js"></script>
+			<script type="application/javascript" src="{$basePath}/resources/frontModule/assets/bootstrap/js/bootstrap.min.js"></script>
+
+			<script type="application/javascript" src="{$basePath}/resources/frontModule/assets/nette.ajax.js/nette.ajax.js"></script>
+			<script type="application/javascript" src="{$basePath}/resources/frontModule/assets/nette.ajax.js/extensions/diagnostics.dumps.ajax.js"></script>
+			<script type="application/javascript" src="{$basePath}/resources/frontModule/assets/nette.ajax.js/extensions/fidRemove.ajax.js"></script>
+			<script type="application/javascript" src="{$basePath}/resources/frontModule/assets/history.ajax.js/history.ajax.js"></script>
+
+			<script type="application/javascript" src="{$basePath}/resources/frontModule/assets/nette-live-form-validation/live-form-validation.js"></script>
+			<script type="application/javascript" src="{$basePath}/resources/frontModule/assets/select2/js/select2.js"></script>
+
+{*			<script type="application/javascript" src="{$basePath}/js/jquery.smooth-scroll-nivea.js"></script>*}
+{*			<script type="application/javascript" src="{$basePath}/js/modernizr.js"></script>*}
 {*			<script type="application/javascript" src="{$basePath}/js/extensions/page.js"></script>*}
-			<script type="application/javascript" src="{$basePath}/js/application.js?v=7"></script>
+{*			<script type="application/javascript" src="{$basePath}/js/application.js?v=7"></script>*}
 {*			<script type="application/javascript" src="{$basePath}/js/extensions/form.js"></script>*}
+			<script type="application/javascript" src="{$basePath}/resources/frontModule/assets/nette-progress/nette.nprogress.js"></script>
+			<script type="application/javascript" src="{$basePath}/resources/frontModule/assets/nette-progress/nprogress.js"></script>
 			<!-- endbuild -->
 		{/if}
 
-		<script type="application/javascript" src="{$basePath}/js/nette.nprogress.js"></script>
-		<script type="application/javascript" src="{$basePath}/js/nprogress.js"></script>
 		{*================== END BASE JS ==================*}
 	{/block}
 	{block extraScripts}{/block}

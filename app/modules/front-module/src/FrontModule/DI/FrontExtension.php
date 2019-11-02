@@ -12,12 +12,8 @@ namespace FrontModule\DI;
 use Devrun\Config\CompilerExtension;
 use Flame\Modules\Providers\IPresenterMappingProvider;
 use Flame\Modules\Providers\IRouterProvider;
-use FrontModule\Entities\TestSitesEntity;
-use FrontModule\Entities\UserTestSiteEntity;
-use FrontModule\Repositories\TestSiteRepository;
-use FrontModule\Repositories\UserTestSiteRepository;
+use FrontModule\Filters\CommonFilter;
 use Kdyby\Doctrine\DI\IEntityProvider;
-use Kdyby\Doctrine\DI\OrmExtension;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\ContainerBuilder;
@@ -40,19 +36,12 @@ class FrontExtension extends CompilerExtension implements IPresenterMappingProvi
 
 
         $builder->addDefinition($this->prefix('commonFilter'))
-            ->setFactory('FrontModule\Filters\CommonFilter');
+            ->setType(CommonFilter::class);
 
 
         /*
          * repositories
          */
-        $builder->addDefinition($this->prefix('repository.userTestSite'))
-            ->setType(UserTestSiteRepository::class)
-            ->addTag(OrmExtension::TAG_REPOSITORY_ENTITY, UserTestSiteEntity::class);
-
-        $builder->addDefinition($this->prefix('repository.testSite'))
-            ->setType(TestSiteRepository::class)
-            ->addTag(OrmExtension::TAG_REPOSITORY_ENTITY, TestSitesEntity::class);
 
 
 
@@ -71,6 +60,11 @@ class FrontExtension extends CompilerExtension implements IPresenterMappingProvi
 
         $builder->addDefinition($this->prefix('form.secureFormFactory'))
             ->setImplement('FrontModule\Forms\ISecureFormFactory')
+            ->setInject(true);
+
+
+        $builder->addDefinition($this->prefix('form.registrationFormFactory'))
+            ->setImplement('FrontModule\Forms\IRegistrationFormFactory')
             ->setInject(true);
 
 
@@ -117,37 +111,8 @@ class FrontExtension extends CompilerExtension implements IPresenterMappingProvi
 
         $routeList     = new RouteList();
 
-/*
-        $routeList[]   = $quizRouter = new RouteList('Front');
-        $quizRouter[] = new Route("[<locale={$lang} sk|hu|cs>/]<presenter>/<action>[/<id>]", array(
-            'presenter' => array(
-                Route::VALUE        => 'Homepage',
-                Route::FILTER_TABLE => array(
-                    'testovaci' => 'Test',
-                ),
-            ),
-            'action'    => array(
-                Route::VALUE        => 'default',
-                Route::FILTER_TABLE => array(
-                    'operace-ok' => 'operationSuccess',
-                ),
-            ),
-            'id'        => null,
-            'locale'    => [
-                Route::FILTER_TABLE => [
-                    'cz'  => 'cs',
-                    'sk'  => 'sk',
-                    'pl'  => 'pl',
-                    'com' => 'en'
-                ]]
-        ));
-*/
-
-        /**
-         * všeobecná routa
-         */
-        $routeList[] = new Route("[<locale={$lang} sk|hu|cs|en>/][<module=Front>/]<presenter>/<action>[/<id>]", array(
-//            'module' => 'Front',
+        $routeList[]   = $frontRouter = new RouteList('Front');
+        $frontRouter[] = new Route("[<locale={$lang} sk|hu|cs>/]<presenter>/<action>[/<id>]", array(
             'presenter' => array(
                 Route::VALUE        => 'Homepage',
                 Route::FILTER_TABLE => array(

@@ -1,25 +1,36 @@
 {*{block title}{$title}{/block}*}
 {block content|trim}
 	<section id="homepage">
-		<figure class="logo">
-			{img 'images/q7/audi-logo.png'}
-		</figure>
 
 		<div class="container">
 			<div class="content-inner container-desc bounceIn animated">
 {*				<h1 n:article="homepage.text1 header simple" class="text-primary">{article |noescape}</h1>*}
 			</div>
 
-			<div class="content-inner form">
-				{form secureForm}
-					<div class="animated position-relative" data-anim="slide-out-blurred-right" data-anim-delay="0.4s">
-						<div n:if="$form->hasErrors()" class="alert alert-danger animated flipInX">
-							<h4 n:foreach="$form->errors as $error">{$error|noescape}</h4>
-						</div>
+			<a n:href="Form:" class="btn btn-primary">Formulář</a>
+			<a n:href="ThankYou:" class="btn btn-primary">Děkuemene</a>
+{*			<a n:href="">Dekujeme</a>*}
 
-						<div class="form-group position-relative">
-							{input code}
-							<input n:name="send" class="arrow">
+			<div class="content-inner form">
+				{form secureForm class => 'form-signin'}
+					<figure class="logo">
+						<img src="{$basePath}/resources/frontModule/img/hosting-30-512.png" alt="" width="256">
+{*						{img 'resources/frontModule/img/hosting-30-512.png'}*}
+					</figure>
+
+
+					<h3 class="mb-3 font-weight-normal title text-light bg-dark">Please sign in</h3>
+
+					<div class="form-group">
+						{label code class=>"text-light" /}
+						{input code}
+					</div>
+					{input send class=>'btn btn-lg btn-primary btn-block'}
+					<p class="mt-5 mb-3 text-white-50">&copy; 2019</p>
+
+					<div n:if="$form->hasErrors()" class="animated position-relative" data-anim="slide-out-blurred-right" data-anim-delay="0.4s">
+						<div class="alert alert-danger animated flipInX">
+							<h4 n:foreach="$form->errors as $error">{$error|noescape}</h4>
 						</div>
 					</div>
 				{/form}

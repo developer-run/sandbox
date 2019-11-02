@@ -9,13 +9,9 @@
 
 namespace FrontModule\Presenters;
 
-use FrontModule\Repositories\UserTestSiteRepository;
 
 class ThankYouPresenter extends BaseAppPresenter
 {
-
-    /** @var UserTestSiteRepository @inject */
-    public $userTestSiteRepository;
 
 
     public function actionDefault()
@@ -26,15 +22,14 @@ class ThankYouPresenter extends BaseAppPresenter
         $saved = false;
 
         if ($uid) {
-            if ($userTestSiteEntity = $this->userTestSiteRepository->findOneBy(['user.username' => $uid, 'user.active' => false])) {
-                $saved = true;
-            }
+
         }
 
         if (!$saved) {
 //            $this->template->redirect = "Homepage:";
-            $this->ajaxRedirect('Homepage:');
+//            $this->ajaxRedirect('Homepage:');
         }
+
 
         $this->template->saved = $saved;
     }

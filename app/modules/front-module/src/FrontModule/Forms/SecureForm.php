@@ -39,13 +39,33 @@ class SecureForm extends BaseForm
             ->setAttribute('class', 'arrow');
 
         $this->onValidate[] = [$this, 'validateCode'];
-//        $this->onSuccess[] = [$this, 'success'];
+        $this->onSuccess[] = [$this, 'success'];
+
+        $this->getElementPrototype()->setAttribute('class', 'form-signin');
 
         return $this;
     }
 
 
+    public function success(SecureForm $form, $values)
+    {
+
+    }
+
+
     public function validateCode(SecureForm $form, $values)
+    {
+        /** @var UserEntity $entity */
+        if (123123 != $values->code) {
+            $form->addError('code.invalid');
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private function validateCodeFeature(SecureForm $form, $values)
     {
         /** @var UserEntity $entity */
         if (!$entity = $this->userRepository->findOneBy(['username' => $values->code])) {
@@ -60,8 +80,5 @@ class SecureForm extends BaseForm
 
         return true;
     }
-
-
-
 
 }

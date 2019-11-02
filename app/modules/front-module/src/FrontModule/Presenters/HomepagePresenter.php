@@ -47,27 +47,43 @@ class HomepagePresenter extends BaseAppPresenter
         $form->bootstrap3Render();
         $form->onSuccess[] = function ($form, $values) {
 
-            /** @var UserEntity $entity */
-            if ($entity = $this->userRepository->findOneBy(['username' => $values->code])) {
+            $section = $this->getSection('play');
+            $section->setExpiration('+60 minutes');
+            $section->uid = $values->code;
+            $section->time = new DateTime('+60 minutes');
 
-                /*
-                if ($values->code != 123123) {
-                    $entity->setActive(false);
-                    $entity->setActiveDateTime(new DateTime());
-                    $this->userRepository->getEntityManager()->persist($entity)->flush();
-                }
-                */
-
-                $section = $this->getSection('play');
-                $section->setExpiration('+60 minutes');
-                $section->uid = $values->code;
-                $section->time = new DateTime('+60 minutes');
-            }
-
-            $this->ajaxRedirect("Form:");
+            $this->ajaxRedirect(":Front:Form:");
         };
 
         return $form;
+    }
+
+
+    /**
+     * feature, not use yet
+     *
+     * @param $values
+     * @throws \Exception
+     */
+    private function formSuccess($values)
+    {
+        /** @var UserEntity $entity */
+        if ($entity = $this->userRepository->findOneBy(['username' => $values->code])) {
+
+            /*
+            if ($values->code != 123123) {
+                $entity->setActive(false);
+                $entity->setActiveDateTime(new DateTime());
+                $this->userRepository->getEntityManager()->persist($entity)->flush();
+            }
+            */
+
+            $section = $this->getSection('play');
+            $section->setExpiration('+60 minutes');
+            $section->uid = $values->code;
+            $section->time = new DateTime('+60 minutes');
+        }
+
     }
 
 }

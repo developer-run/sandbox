@@ -2,25 +2,34 @@
 {block content|trim}
 	<section id="thanks" data-anim="slit-out-diagonal-1" style="overflow: hidden">
 		<figure class="logo">
-			{image 'images/q7/audi-logo.png'}
+{*			{img 'images/q7/audi-logo.png'}*}
 		</figure>
 
-		<div class="container container-desc slide-in-elliptic-bottom-fwd" style="animation-delay: 400ms;">
-			<article class="description">
-				<p n:article="q7.thankYou.q7 header simple" class="q7">{article |noescape}</p>
-				<h1 n:article="q7.thankYou header simple" class="text-primary">{article |noescape}</h1>
-				<p n:article="q7.thankYou subHeader simple" class="text-primary _m-b-0">{article |noescape}</p>
 
-				<br>
-				<a target="_blank" href="{_site.audi.url}" class="arrow">{_site.audi.title}</a>
-			</article>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<img class="mb-4 img-fluid" src="https://images.unsplash.com/photo-1554557884-bc29a8e33212?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjIwOTIyfQ" alt="">
+					<h3 class="text-light">Column title</h3>
+					<p class="text-info">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+				</div>
+				<div class="col-md-4">
+					<img class="mb-4 img-fluid" src="https://images.unsplash.com/photo-1562714442-5a027fb1300c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjIwOTIyfQ" alt="">
+					<article>
+						<h2 class="text-light">Heading 2</h2>
+					</article>
+				</div>
+				<div class="col-md-4">
+					<img class="mb-4 img-fluid" src="https://images.unsplash.com/photo-1569513586164-80529357ad6f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjIwOTIyfQ" alt="">
+					<section>
+						<h2 class="text-light">Heading 2</h2>
+					</section>
+				</div>
+			</div>
+
+			<a n:href="Homepage:" class="btn btn-primary">Homepage</a>
 		</div>
 
-		<div class="container container-car">
-			<article id="car" class="slide-in-elliptic-top-fwd" style="animation-delay: 800ms;">
-
-			</article>
-		</div>
 	</section>
 
 	{if $saved}
