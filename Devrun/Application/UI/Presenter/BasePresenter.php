@@ -68,9 +68,9 @@ class BasePresenter extends Presenter
             Debugger::$showBar = false;
         }
 
-        if (Devrun\CmsModule\Utils\Common::isPhantomRequest()) {
-            Debugger::$productionMode = true;
-        }
+//        if (Devrun\CmsModule\Utils\Common::isPhantomRequest()) {
+//            Debugger::$productionMode = true;
+//        }
 
         // for application cms garbage mode, can delete page img etc.
         if ((($cmsMode = $this->getHttpRequest()->getPost('cmsMode')) !== NULL) || (($cmsMode = $this->getParameter('cmsMode')) !== NULL)) {
