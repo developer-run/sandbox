@@ -26,6 +26,7 @@ trait TImgStoragePipe
     {
         if ($presenter instanceof Presenter) {
             $this->template->_imgStorage = $this->imgStorage;
+            $this->template->proxyUrl = '';
         }
 
         parent::attached($presenter);
@@ -38,6 +39,7 @@ trait TImgStoragePipe
 
         if (self::$called) {
             $this->template->_imgStorage = $this->imgStorage;
+            $this->template->proxyUrl = '';
         }
     }
 
@@ -46,6 +48,7 @@ trait TImgStoragePipe
 
         $template = parent::createTemplate($class);
         $template->_imgStorage = $this->imgStorage;
+        $template->proxyUrl = '';
 
         return $template;
     }
