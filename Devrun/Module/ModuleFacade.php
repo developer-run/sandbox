@@ -364,10 +364,8 @@ class ModuleFacade
 
     public function create(IModule $module)
     {
-        var_dump($module);
-
         $config = $this->loadAppConfig();
-        var_dump($config);
+        // ...?
 
     }
 

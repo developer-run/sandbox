@@ -107,11 +107,13 @@ class CreateCommand extends Command
         // make module extension
         file_put_contents($path . "/src/$m/DI/" . ucfirst($module) . 'Extension.php', $this->getDIFile($module));
 
-        $this->moduleManager->create($module);
+        $modules   = $this->moduleManager->findModules();
+        $newModule = $modules[$module];
 
+        $this->moduleManager->create($newModule);
 
         $output->writeln(sprintf('<info>Module</info> <comment>%s</comment> <info>has been created in path</info> <comment>%s.</comment>', $module, $path));
-        $output->writeln(sprintf('Add <comment>%s</comment> extension to your configuration', $module));
+        $output->writeln(sprintf('Install <comment>%s</comment> module <info>devrun:module:install %s</info>', $module, $module));
     }
 
 
