@@ -27,13 +27,11 @@ class CoreExtension extends CompilerExtension
     public $defaults = array(
         'cssUrlsFilterDir'      => '%wwwDir%',
         'pageStorageExpiration' => '5 hours',
-        'composer'              => [
-            'update' => false,
-            'write'  => false,
-            'tags'   => '--no-interaction --ansi',
-        ],
-        'migration'             => [
-            'update' => false
+        'update'                => [
+            'composer'      => false,
+            'composerWrite' => false,
+            'composerTags'  => '--no-interaction --ansi',
+            'migration'     => false,
         ],
     );
 
@@ -73,9 +71,9 @@ class CoreExtension extends CompilerExtension
         $builder->addDefinition($this->prefix('authorizator'))
                 ->setType('Devrun\Security\Authorizator');
 
-        $builder->addDefinition($this->prefix('authenticator'))
-                ->setType('Devrun\Security\Authenticator')
-                ->setInject();
+//        $builder->addDefinition($this->prefix('authenticator'))
+//                ->setType('Devrun\Security\Authenticator')
+//                ->setInject();
 
         $builder->addDefinition($this->prefix('listener.flush'))
                 ->setFactory('Devrun\Listeners\FlushListener', [$builder->parameters['autoFlush']])
@@ -110,11 +108,11 @@ class CoreExtension extends CompilerExtension
 
         // Subscribers
         $builder->addDefinition($this->prefix('subscriber.composer'))
-                ->setFactory(ComposerListener::class, [$config['composer']['update'], $config['composer']['tags'], $config['composer']['write']])
+                ->setFactory(ComposerListener::class, [$config['update']['composer'], $config['update']['composerTags'], $config['update']['composerWrite']])
                 ->addTag(EventsExtension::TAG_SUBSCRIBER);
 
         $builder->addDefinition($this->prefix('subscriber.migration'))
-                ->setFactory(MigrationListener::class, [$config['migration']['update']])
+                ->setFactory(MigrationListener::class, [$config['update']['migration']])
                 ->addTag(EventsExtension::TAG_SUBSCRIBER);
 
 

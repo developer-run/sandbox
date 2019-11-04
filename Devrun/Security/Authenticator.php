@@ -2,85 +2,59 @@
 
 namespace Devrun\Security;
 
-use Devrun\Facades\UserFacade;
 use Nette;
-
+use Nette\Security\AuthenticationException;
+use Nette\Security\Identity;
 
 /**
  * Users authenticator.
  */
 class Authenticator implements Nette\Security\IAuthenticator
 {
-    const
-        COLUMN_ID = 'id',
-        COLUMN_NAME = 'username',
-        COLUMN_ROLE = 'role',
-        COLUMN_PASSWORD_HASH = 'password',
-        COLUMN_NEW_PASSWORD_HASH = 'newPassword',
-        COLUMN_MEMBER = 'member',
-        COLUMN_MEMBER_ID = 'memberId';
 
-    /** @var UserFacade */
-    private $userFacade;
+    /** @var string */
+    protected $adminLogin;
+
+    /** @var string */
+    protected $adminPassword;
 
 
     /**
-     * Authenticator constructor.
-     *
-     * @param UserFacade $userFacade
+     * @param $adminLogin
+     * @param $adminPassword
      */
-    function __construct()
-//    function __construct(UserFacade $userFacade)
+    public function __construct($adminLogin, $adminPassword)
     {
-
-
-//        $this->userFacade = $userFacade;
+        $this->adminLogin    = $adminLogin;
+        $this->adminPassword = $adminPassword;
     }
 
 
     /**
-     * Performs an authentication.
+     * Performs an authentication
      *
-     * @param array $credentials
-     *
-     * @return Nette\Security\Identity
-     * @throws Nette\Security\AuthenticationException
+     * @param array
+     * @return \Nette\Security\Identity
+     * @throws \Nette\Security\AuthenticationException
      */
     public function authenticate(array $credentials)
     {
-        if (count($credentials) == 2) {
-            list($username, $password) = $credentials;
+        list($username, $password) = $credentials;
 
-        } elseif (count($credentials) == 1) {
-            list($username) = $credentials;
-            $password = null;
-
-        } else {
-            $username = null;
-            $password = null;
+        if (!$username OR !$password) {
+            throw new AuthenticationException('The username or password is not filled.', self::INVALID_CREDENTIAL);
         }
 
-        /** @var $row array */
-        $row = $this->userFacade->findByLogin($username);
-
-        if (!$row) {
-            throw new Nette\Security\AuthenticationException('Neplatné přihlašovací údaje', self::IDENTITY_NOT_FOUND);
-
-        } elseif ($username !== $row[self::COLUMN_NAME]) {
-            throw new Nette\Security\AuthenticationException('Neplatné přihlašovací údaje', self::INVALID_CREDENTIAL);
-
-        } elseif (md5($username . $password) !== $row[self::COLUMN_PASSWORD_HASH]) {
-            throw new Nette\Security\AuthenticationException('Neplatné přihlašovací údaje', self::INVALID_CREDENTIAL);
+        if ($this->adminLogin != $username) {
+            throw new AuthenticationException('The username is incorrect.', self::INVALID_CREDENTIAL);
         }
 
-        $arr = $row;
-        unset($arr[self::COLUMN_PASSWORD_HASH]);
-        unset($arr[self::COLUMN_NEW_PASSWORD_HASH]);
-        return new Nette\Security\Identity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
+        if ($this->adminPassword != $password) {
+            throw new AuthenticationException('The password is incorrect.', self::IDENTITY_NOT_FOUND);
+        }
+
+        return new Identity($username, array('admin'));
     }
 
-}
 
-class DuplicateNameException extends \Exception
-{
 }
