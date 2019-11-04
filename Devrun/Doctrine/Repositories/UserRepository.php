@@ -11,7 +11,7 @@ namespace Devrun\Doctrine\Repositories;
 
 use Kdyby\Doctrine\EntityRepository;
 
-class UserRepository //extends EntityRepository
+class UserRepository extends EntityRepository
 {
 
 }
