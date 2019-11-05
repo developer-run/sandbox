@@ -21,10 +21,11 @@ class Migration
     public static function reset(\Nette\DI\Container $container)
     {
         /** @var \Kdyby\Doctrine\EntityManager $em */
-        $em = $container->getByType('Kdyby\Doctrine\EntityManager');
-        $conn = $em->getConnection();
+        $em     = $container->getByType('Kdyby\Doctrine\EntityManager');
+        $conn   = $em->getConnection();
+        $tmpDir = $container->parameters['tempDir'];
 
-        if (file_exists($dbSnapshot = TEMP_DIR . "/db-snapshot.sql")) {
+        if (file_exists($dbSnapshot = "$tmpDir/db-snapshot.sql")) {
             try {
                 echo(EscapeColors::fg_color("cyan", PHP_EOL . "init database from snapshot..." . PHP_EOL));
 
