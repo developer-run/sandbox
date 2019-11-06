@@ -1,23 +1,6 @@
 <?php
 
-function removeFiles($source){
-	$folder = opendir($source);
-	while($file = readdir($folder))	{
-		if ($file == '.' || $file == '..') {
-			continue;
-		}
-	       
-		if(is_dir($source.'/'.$file)){
-			removeFiles($source.'/'.$file);
-		}
-		else {
-			unlink($source.'/'.$file);
-            echo 'mazu soubor: '.$source.'/'.$file.'<br />';
-		}
-	}
-	closedir($folder);
-	rmdir($source);
-	return 1;
-}
-removeFiles('../temp/cache');
-?>
+require __DIR__ . '/../vendor/autoload.php';
+\Devrun\Utils\FileTrait::purge($dir = dirname(__DIR__) . "/temp/cache");
+
+echo "<span style='color: darkmagenta; font-weight: bold;'>'$dir'</span> is purged";
