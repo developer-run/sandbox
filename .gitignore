@@ -4,4 +4,5 @@
 ### Composer template
 composer.phar
 /composer.lock
+/node_modules/
 /vendor/

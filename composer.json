@@ -29,7 +29,10 @@
 		"ext-gd": "*",
 		"ext-curl": "*",
 		"ext-sqlite3": "*",
-		"ext-json": "*"
+		"ext-json": "*",
+		"ext-pdo": "*",
+		"ext-simplexml": "*",
+		"ext-iconv": "*"
     },
 	"require-dev": {
 		"contributte/codeception": "^0.7.7"

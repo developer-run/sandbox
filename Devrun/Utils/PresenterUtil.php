@@ -15,6 +15,7 @@ use Nette\Utils\Strings;
 class PresenterUtil
 {
     const PUBLIC_PRESENTER_TAG = 'public.presenter';
+    const DEVRUN_PRESENTER_TAG = 'devrun.presenter';
 
 
     /**

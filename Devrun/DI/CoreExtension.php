@@ -68,8 +68,8 @@ class CoreExtension extends CompilerExtension
         $builder->getDefinition('user')
                 ->setFactory('Devrun\Security\User');
 
-        $builder->addDefinition($this->prefix('authorizator'))
-                ->setType('Devrun\Security\Authorizator');
+//        $builder->addDefinition($this->prefix('authorizator'))
+//                ->setType('Devrun\Security\Authorizator');
 
 //        $builder->addDefinition($this->prefix('authenticator'))
 //                ->setType('Devrun\Security\Authenticator')
