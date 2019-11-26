@@ -5,6 +5,7 @@
 	"description": "Simple and easy for use system for managing your websites.",
 	"keywords": ["nette", "framework"],
 	"license": "proprietary",
+	"version": "v0.8.3",
 	"authors": [
 		{
 			"name": "Pavel Palik"
@@ -32,7 +33,8 @@
 		"ext-json": "*",
 		"ext-pdo": "*",
 		"ext-simplexml": "*",
-		"ext-iconv": "*"
+		"ext-iconv": "*",
+		"ext-fileinfo": "*"
     },
 	"require-dev": {
 		"contributte/codeception": "^0.7.7"
