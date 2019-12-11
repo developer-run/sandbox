@@ -41,18 +41,20 @@ class FlushListener implements Subscriber
      * @param IPresenter             $presenter
      * @param IResponse|TextResponse $response
      */
-    public function onShutdown(IPresenter $presenter, IResponse $response)
+    public function onShutdown(IPresenter $presenter, IResponse $response = null)
     {
         if (!$this->autoFlush || $this->checkChangeSet()) {
             return;
         }
 
+        /*
         if ($response instanceof TextResponse) {
             $html = (string)$response->getSource();
             if ($this->checkChangeSet()) {
                 return;
             }
         }
+        */
     }
 
 
