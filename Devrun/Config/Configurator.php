@@ -176,8 +176,22 @@ class Configurator extends \Nette\Configurator
     {
         return isset($_SERVER['SERVER_NAME'])
             ? $_SERVER['SERVER_NAME']
-            : (function_exists('gethostname') ? gethostname() : NULL);
+            : self::getSAPIEnvironment();
     }
+
+
+    protected static function getSAPIEnvironment()
+    {
+        $env = [
+            'cli'      => 'test',
+            'cgi'      => 'cron',
+            'cgi-fcgi' => 'cron',
+            'fpm-fcgi' => 'cron',
+        ];
+
+        return $env[PHP_SAPI] ?? NULL;
+    }
+
 
     public function setEnvironment($name)
     {
@@ -204,6 +218,15 @@ class Configurator extends \Nette\Configurator
      */
     public function createContainer()
     {
+        // add config files
+        foreach ($this->getConfigFiles() as $file) {
+            if (!file_exists($file)) {
+                @touch($file);
+            }
+
+            $this->addConfig($file);
+        }
+
         // create container
         $container = parent::createContainer();
 
@@ -216,6 +239,23 @@ class Configurator extends \Nette\Configurator
         return $container;
     }
 
+
+
+    /**
+     * @return array
+     */
+    protected function getConfigFiles()
+    {
+        $ret = array();
+        $ret[] = $this->parameters['configDir'] . '/config.neon';
+        $ret[] = $this->parameters['configDir'] . "/config_{$this->parameters['environment']}.neon";
+
+        if (($agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'admin') == 'admin') {
+            $ret[] = $this->parameters['configDir'] . "/config_admin.neon";
+        }
+
+        return $ret;
+    }
 
 
 
