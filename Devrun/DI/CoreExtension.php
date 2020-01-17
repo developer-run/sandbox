@@ -43,16 +43,9 @@ class CoreExtension extends CompilerExtension
         $config  = $this->getConfig($this->defaults);
 
         // repositories
-        $builder->addDefinition($this->prefix('repository.user'))
-                ->setType('Devrun\Doctrine\Repositories\UserRepository')
-                ->addTag(OrmExtension::TAG_REPOSITORY_ENTITY, UserEntity::class);
 
 
         // facades
-        $builder->addDefinition($this->prefix('facade.user'))
-                ->setType('Devrun\Facades\UserFacade');
-
-
         $builder->addDefinition($this->prefix('facade.module'))
                 ->setType('Devrun\Module\ModuleFacade')
                 ->addSetup('setPageStorageExpiration', [$config['pageStorageExpiration']]);
@@ -75,12 +68,7 @@ class CoreExtension extends CompilerExtension
 //                ->setType('Devrun\Security\Authenticator')
 //                ->setInject();
 
-        $builder->addDefinition($this->prefix('listener.flush'))
-                ->setFactory('Devrun\Listeners\FlushListener', [$builder->parameters['autoFlush']])
-                ->addTag(EventsExtension::TAG_SUBSCRIBER);
 
-        $builder->addDefinition($this->prefix('security.loggedUser'))
-                ->setType('Devrun\Security\LoggedUser');
 
         // http
         $builder->getDefinition('httpResponse')

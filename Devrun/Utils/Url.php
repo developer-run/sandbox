@@ -81,4 +81,17 @@ class Url
     }
 
 
+    /**
+     * is valid youtube url?
+     *
+     * @param string $url [https://www.youtube.com/watch?v=cCO2tPGa-dM]
+     * @return bool
+     */
+    public static function isValidYoutube(string $url)
+    {
+        $parsed_url = parse_url($url);
+        return $parsed_url['host'] == 'www.youtube.com' && $parsed_url['path'] == "/watch" && substr($parsed_url['query'], 0, 2) == "v=";
+    }
+
+
 }

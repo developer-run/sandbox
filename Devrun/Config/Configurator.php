@@ -321,17 +321,14 @@ class Configurator extends \Nette\Configurator
             $compiler->addExtension('events', new EventsExtension());
             $compiler->addExtension('console', new ConsoleExtension());
             $compiler->addExtension('annotations', new AnnotationsExtension());
-            $compiler->addExtension('doctrine', new OrmExtension());
             $compiler->addExtension('translation', new TranslationExtension());
             $compiler->addExtension('translatable', new TranslatableExtension());
-            $compiler->addExtension('migrations', new MigrationsExtension());
             $compiler->addExtension('monolog', new MonologExtension());
             $compiler->addExtension('modules', new ModulesExtension());
             $compiler->addExtension('debugger.session', new SessionPanelExtension());
 
             $compiler->addExtension('core', new Devrun\DI\CoreExtension());
             $compiler->addExtension('imageStorage', new ImagesExtension());
-            $compiler->addExtension('doctrineForms', new Devrun\DI\FormsExtension());
         };
 
         return parent::generateContainer($compiler);

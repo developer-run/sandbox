@@ -79,8 +79,12 @@ class ComposerModule extends BaseModule
             if ($isGit = is_dir($this->getGitPath() . "/.git")) {
                 chdir($this->getGitPath());
 
-                if ($gitVersion = exec('git describe --tags --always')) {
-                    return $gitVersion;
+                if (function_exists("exec")) {
+                    if ($gitVersion = exec('git describe --tags --always')) {
+                        return $gitVersion;
+                    }
+                } else {
+                    return "?";
                 }
 
             } else {

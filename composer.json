@@ -34,8 +34,9 @@
 		"ext-simplexml": "*",
 		"ext-iconv": "*",
 		"ext-fileinfo": "*",
-		"ext-zend-opcache": "*"
-    },
+		"ext-zend-opcache": "*",
+		"ext-openssl": "*"
+	},
 	"require-dev": {
 		"contributte/codeception": "^0.7.7"
 	},
