@@ -18,8 +18,6 @@ class HomepagePresenter extends BaseAppPresenter
     /** @var ISecureFormFactory @inject */
     public $secureFormFactory;
 
-    /** @var UserRepository @inject */
-    public $userRepository;
 
 
     public function actionDefault()

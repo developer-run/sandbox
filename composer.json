@@ -11,7 +11,8 @@
     }
   ],
   "require": {
-    "devrun/framework": "^0.8"
+    "devrun/framework": "^0.8",
+    "ext-zend-opcache": "*"
   },
   "repositories": [
     {

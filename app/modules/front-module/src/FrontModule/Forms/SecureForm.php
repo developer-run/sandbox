@@ -3,10 +3,7 @@
 namespace FrontModule\Forms;
 
 use Devrun\Doctrine\Entities\UserEntity;
-use Devrun\Doctrine\Repositories\UserRepository;
 use Nette\Application\UI\Form;
-use Nette\Utils\DateTime;
-use Tracy\Debugger;
 
 interface ISecureFormFactory
 {
@@ -20,9 +17,6 @@ interface ISecureFormFactory
  */
 class SecureForm extends BaseForm
 {
-
-    /** @var UserRepository @inject */
-    public $userRepository;
 
 
     /**

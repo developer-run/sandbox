@@ -1,5 +1,6 @@
 <?php
 
+opcache_reset();
 require __DIR__ . '/../vendor/autoload.php';
 \Devrun\Utils\FileTrait::purge($dir = dirname(__DIR__) . "/temp/cache");
 
