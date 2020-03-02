@@ -3,6 +3,7 @@
   "description": "DevRun project",
   "keywords": ["cms", "nette", "devrun", "project"],
   "minimum-stability": "dev",
+  "version": "v0.8.5",
   "homepage": "http://devrun.cz",
   "license": "proprietary",
   "authors": [
