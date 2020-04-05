@@ -9,7 +9,7 @@ error_reporting(~E_USER_DEPRECATED); // note ~ before E_USER_DEPRECATED
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader
     ->addDirectory(__DIR__)
-    ->ignoreDirs .= ', templates, test, resources';
+    ->ignoreDirs += ['templates', 'test', 'resources'];
 $robotLoader->register();
 
 $container = $configurator->createContainer();
