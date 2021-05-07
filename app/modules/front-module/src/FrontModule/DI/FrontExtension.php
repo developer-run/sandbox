@@ -17,7 +17,6 @@ use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\ContainerBuilder;
-use Nette\Environment;
 
 class FrontExtension extends CompilerExtension implements IPresenterMappingProvider, IRouterProvider, IEntityProvider
 {
@@ -107,9 +106,12 @@ class FrontExtension extends CompilerExtension implements IPresenterMappingProvi
      */
     public function getRoutesDefinition()
     {
-        $lang = Environment::getConfig('lang');
+        global /** @var \Nette\DI\Container $container */
+        $container;
 
-        $routeList     = new RouteList();
+        $lang = $container->getParameters()['lang'];
+
+        $routeList = new RouteList();
 
         $routeList[]   = $frontRouter = new RouteList('Front');
         $frontRouter[] = new Route("[<locale={$lang} sk|hu|cs>/]<presenter>/<action>[/<id>]", array(
